@@ -1,8 +1,5 @@
 # Mac OS only
 
-## cat with SublimeText
-alias scat='subl -w'
-
 ## Recursively remove .DS_Store files
 alias cleanupds="find . -type f -name '*.DS_Store' -ls -delete"
 

@@ -1,12 +1,12 @@
 # Mac OS only
 
 ## cat with SublimeText
-function scat () {
+scat () {
 	subl -w $1 &
 }
 
 ## Open man page as PDF
-function manpdf() {
+manpdf() {
 	man -t "${1}" | open -f -a /Applications/Preview.app/ 
 }
 
