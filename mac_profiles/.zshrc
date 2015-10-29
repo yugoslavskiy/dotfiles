@@ -12,9 +12,10 @@ source $ZSH/oh-my-zsh.sh
 ## Path to dotfiles directory.
 export DOTFILES_DIR=$HOME/Dropbox/dotfiles
 
-## Exporting system-specific environment
+## Exporting system-specific environment and features
 export FPATH=$ZSH/custom/plugins/zsh-completions/src:$FPATH
 source $DOTFILES_DIR/system/.env
+#source $DOTFILES_DIR/mac_profiles/osxdefaults.sh
 
 ## Autoload completions for plugins.
 autoload -U compinit && compinit

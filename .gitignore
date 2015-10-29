@@ -1,2 +1,5 @@
 # my private files
 *_private
+
+# Folder view configuration files
+.DS_Store
