@@ -1,0 +1,23 @@
+# Mac OS only
+
+## cat with SublimeText
+alias scat='subl -w'
+
+## Recursively remove .DS_Store files
+alias cleanupds="find . -type f -name '*.DS_Store' -ls -delete"
+
+## Fast wi-fi switch
+alias wifi_off='networksetup -setairportpower airport off'
+alias wifi_on='networksetup -setairportpower airport on'
+
+## iTerm cli image show
+alias imgcat='~/bin/imgcat.sh'
+
+## Nikto web scanner
+alias nikto='~/bin/nikto-master/program/nikto.pl'
+
+## GNU tail
+alias tac='tail -r'
+
+## List open ports
+alias ports="netstat -anlt | grep LISTEN"

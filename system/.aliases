@@ -1,0 +1,47 @@
+## Checksums
+alias sha1="openssl sha1"
+alias md5="openssl md5"
+
+## Directory navigation aliases
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+## tmux
+alias tmux='tmux attach || tmux new'
+
+## quick find
+alias qfind="find . -name "
+
+## Get header
+alias header="curl -I"
+
+## Get external IP address
+alias ipx="curl -s http://ipinfo.io/ip"
+
+## strings
+alias strings="strings -a"
+
+## Network check
+alias p8="ping 8.8.8.8"
+alias pru="ping ya.ru"
+
+## history
+alias hg="history | grep"
+
+## nmap
+alias nmap="nmap --reason --open"
+
+## edb
+alias edb="cd /usr/share/exploitdb/"
+alias edbroot="cd /usr/share/exploitdb/"
+
+## ssh
+#alias ssh=color-ssh
+
+## proxy
+alias uqproxy='proxychains4 -q'
+
+## mpc
+alias mpc='~/bin/mpc/mpc.sh'

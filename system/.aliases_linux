@@ -1,0 +1,4 @@
+# Linux only
+
+## List open ports
+alias ports="netstat -tulanp"
