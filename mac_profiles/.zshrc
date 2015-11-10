@@ -1,7 +1,7 @@
 ## ln -sfhv "/Users/yugoslavskiy/Dropbox/dotfiles/mac_profiles/.zshrc" ~
 
 ## yeap.
-ZSH_THEME="af-magic"
+ZSH_THEME="fox"
 
 ## Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -10,7 +10,7 @@ export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 ## Path to dotfiles directory.
-export DOTFILES_DIR=$HOME/Dropbox/dotfiles
+export DOTFILES_DIR=/Users/yugoslavskiy/Dropbox/dotfiles
 
 ## Exporting system-specific environment and features
 export FPATH=$ZSH/custom/plugins/zsh-completions/src:$FPATH

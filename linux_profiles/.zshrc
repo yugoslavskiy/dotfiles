@@ -1,7 +1,7 @@
 ## ln -sfv "/media/psf/Dropbox/dotfiles/linux_profiles/.zshrc" ~
 
 ## yeap.
-ZSH_THEME="af-magic"
+ZSH_THEME="fox"
 
 ## Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
