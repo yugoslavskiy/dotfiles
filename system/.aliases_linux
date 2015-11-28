@@ -2,3 +2,14 @@
 
 ## List open ports
 alias ports="netstat -tulanp"
+
+## edb
+alias edb="cd /usr/share/exploitdb/"
+alias edbroot="cd /usr/share/exploitdb/"
+
+## mpc
+alias mpc='/media/psf/Home/bin/mpc/mpc.sh'
+
+## Checksums
+alias sha1="openssl sha1"
+alias md5="openssl md5"

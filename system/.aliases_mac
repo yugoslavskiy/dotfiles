@@ -10,24 +10,21 @@ alias wifi_on='networksetup -setairportpower airport on'
 ## iTerm cli image show
 alias imgcat='~/bin/imgcat.sh'
 
-## Nikto web scanner
-alias nikto='~/bin/nikto-master/program/nikto.pl'
-
 ## GNU tail
 alias tac='tail -r'
 
 ## List open ports
 alias ports="netstat -anlt | grep LISTEN"
 
-# Show/hide hidden files in Finder
+## Show/hide hidden files in Finder
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
 alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
-# Hide/show all desktop icons (useful when presenting)
+## Hide/show all desktop icons (useful when presenting)
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
-# URL-encode strings
+## URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # Get OS X Software Updates, and update installed Ruby gems, Homebrew, and their installed packages
@@ -38,3 +35,28 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew c
 # Finally, clear download history from quarantine. https://mths.be/bum
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
+
+# Some offensive staff
+
+## nikto
+alias nikto='~/bin/nikto-master/program/nikto.pl'
+
+## mpc
+alias mpc='~/bin/mpc/mpc.sh'
+
+## edb
+alias searchsploit="~/bin/exploit-db/searchsploit"
+alias edb="cd ~/bin/exploit-db/"
+alias edbroot="cd ~/bin/exploit-db/"
+
+## wpscan
+alias wpscan='~/bin/wpscan/wpscan.rb'
+
+## whatweb
+alias whatweb='~/bin/WhatWeb/whatweb'
+
+## recon-ng
+alias recon-ng='~/bin/recon-ng/recon-ng'
+
+## dnsrecon
+alias dnsrecon='~/bin/dnsrecon/dnsrecon.py'

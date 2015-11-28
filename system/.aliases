@@ -1,6 +1,4 @@
-## Checksums
-alias sha1="openssl sha1"
-alias md5="openssl md5"
+# Common *nix-based aliases
 
 ## Directory navigation aliases
 alias ..="cd .."
@@ -33,15 +31,8 @@ alias hg="history | grep"
 ## nmap
 alias nmap="nmap --reason --open"
 
-## edb
-alias edb="cd /usr/share/exploitdb/"
-alias edbroot="cd /usr/share/exploitdb/"
-
 ## ssh
 #alias ssh=color-ssh
 
 ## proxy
 alias uqproxy='proxychains4 -q'
-
-## mpc
-alias mpc='~/bin/mpc/mpc.sh'
