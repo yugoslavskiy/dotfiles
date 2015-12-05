@@ -10,7 +10,7 @@ export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 ## Path to dotfiles directory.
-export DOTFILES_DIR=/Users/yugoslavskiy/Dropbox/dotfiles
+export DOTFILES_DIR=/Users/yugoslavskiy/Dropbox/projects/dotfiles
 
 ## Exporting system-specific environment and features
 export FPATH=$ZSH/custom/plugins/zsh-completions/src:$FPATH

@@ -38,25 +38,6 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo 
 
 # Some offensive staff
 
-## nikto
-alias nikto='~/bin/nikto-master/program/nikto.pl'
-
-## mpc
-alias mpc='~/bin/mpc/mpc.sh'
-
 ## edb
-alias searchsploit="~/bin/exploit-db/searchsploit"
-alias edb="cd ~/bin/exploit-db/"
-alias edbroot="cd ~/bin/exploit-db/"
-
-## wpscan
-alias wpscan='~/bin/wpscan/wpscan.rb'
-
-## whatweb
-alias whatweb='~/bin/WhatWeb/whatweb'
-
-## recon-ng
-alias recon-ng='~/bin/recon-ng/recon-ng'
-
-## dnsrecon
-alias dnsrecon='~/bin/dnsrecon/dnsrecon.py'
+alias edb="cd ~/src/exploit-db/"
+alias edbroot="cd ~/src/exploit-db/"

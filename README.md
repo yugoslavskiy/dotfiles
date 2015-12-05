@@ -1,19 +1,20 @@
 # dotfiles
+
 just my dotfiles
 
-## Mac OS 
+## Mac OS
 
 ```
-ln -sfhv "/Users/yugoslavskiy/Dropbox/dotfiles/mac_profiles/.zshrc" ~
+ln -sfhv "/Users/yugoslavskiy/Dropbox/projects/dotfiles/mac_profiles/.zshrc" ~
 ```
 
-## Linux 
+## Linux
 
 ```
-ln -sfv "/media/psf/Dropbox/dotfiles/linux_profiles/.zshrc" ~
+ln -sfv "/media/psf/Dropbox/projects/dotfiles/linux_profiles/.zshrc" ~
 ```
 
-## TODO:
+## TO-DO:
 
 - install.sh
 
