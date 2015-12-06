@@ -47,3 +47,14 @@ ex () {
        echo "'$1' is not a valid file!"
    fi
  }
+
+## Speed up msfvenom
+function _msfvenom-list-generate {
+  rm -rf ~/.msf4/msfvenom/
+  mkdir -p ~/.msf4/msfvenom/
+  msfvenom --list > ~/.msf4/msfvenom/all
+  msfvenom --list nops > ~/.msf4/msfvenom/nops
+  msfvenom --list payloads > ~/.msf4/msfvenom/payloads
+  msfvenom --list encoders > ~/.msf4/msfvenom/encoders
+  msfvenom --help-formats 2> ~/.msf4/msfvenom/formats
+}

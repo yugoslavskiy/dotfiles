@@ -36,3 +36,11 @@ alias nmap="nmap --reason --open"
 
 ## proxy
 alias uqproxy='proxychains4 -q'
+
+## Speed up msfvenom
+alias msfvenom-list-all='cat ~/.msf4/msfvenom/all'
+alias msfvenom-list-nops='cat ~/.msf4/msfvenom/nops'
+alias msfvenom-list-payloads='cat ~/.msf4/msfvenom/payloads'
+alias msfvenom-list-encoders='cat ~/.msf4/msfvenom/encoders'
+alias msfvenom-list-formats='cat ~/.msf4/msfvenom/formats'
+alias msfvenom-list-generate='_msfvenom-list-generate'
