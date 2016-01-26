@@ -1,4 +1,8 @@
 ## ln -sfv "/media/psf/Dropbox/dotfiles/linux_profiles/.zshrc" ~
+## ln -sfv "~/.dotfiles/linux_profiles/.zshrc" ~
+
+## Initial path variable setup
+export PATH=$HOME:$PATH
 
 ## yeap.
 ZSH_THEME="fox"
@@ -10,7 +14,8 @@ export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 ## Path to dotfiles directory.
-export DOTFILES_DIR=/media/psf/Dropbox/projects/dotfiles
+## export DOTFILES_DIR=/media/psf/Dropbox/projects/dotfiles
+export DOTFILES_DIR=$HOME/.dotfiles
 
 ## Exporting system-specific environment.
 export FPATH=$ZSH/custom/plugins/zsh-completions/src:$FPATH

@@ -2,7 +2,7 @@
 
 ## cat with SublimeText
 scat () {
-	subl -w $1 &
+	subl -w -s $1 &
 }
 
 # `sdir` with no arguments opens the current directory in Sublime Text, otherwise

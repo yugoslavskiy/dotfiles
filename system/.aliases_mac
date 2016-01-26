@@ -7,9 +7,6 @@ alias cleanupds="find . -type f -name '*.DS_Store' -ls -delete"
 alias wifi_off='networksetup -setairportpower airport off'
 alias wifi_on='networksetup -setairportpower airport on'
 
-## iTerm cli image show
-alias imgcat='~/bin/imgcat.sh'
-
 ## GNU tail
 alias tac='tail -r'
 
