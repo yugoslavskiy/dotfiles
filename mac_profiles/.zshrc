@@ -9,9 +9,6 @@ ZSH_THEME="fox"
 ## Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-## Export zsh initial script.
-source $ZSH/oh-my-zsh.sh
-
 ## Path to dotfiles directory.
 ## export DOTFILES_DIR=$HOME/.dotfiles
 export DOTFILES_DIR=$HOME/Dropbox/projects/dotfiles
@@ -25,7 +22,11 @@ source $DOTFILES_DIR/system/.env
 autoload -U compinit && compinit
 
 # Some zsh plugins.
-plugins=(brew osx pip python git zsh-completions zsh-syntax-highlighting)
+plugins=(brew osx pip python git zsh-completions zsh-syntax-highlighting) # colorize ?
+
+## Export zsh initial script.
+## ALWAYS AFTER "PLUGINS" SECTION!!!
+source $ZSH/oh-my-zsh.sh
 
 ## fasd config.
 eval "$(fasd --init posix-alias zsh-hook zsh-ccomp zsh-wcomp)"
