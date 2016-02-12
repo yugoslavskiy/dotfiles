@@ -10,9 +10,6 @@ ZSH_THEME="fox"
 ## Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-## Export zsh initial script.
-source $ZSH/oh-my-zsh.sh
-
 ## Path to dotfiles directory.
 ## export DOTFILES_DIR=/media/psf/Dropbox/projects/dotfiles
 export DOTFILES_DIR=$HOME/.dotfiles
@@ -21,11 +18,14 @@ export DOTFILES_DIR=$HOME/.dotfiles
 export FPATH=$ZSH/custom/plugins/zsh-completions/src:$FPATH
 source $DOTFILES_DIR/system/.env
 
-# Some zsh plugins.
-plugins=(pip python git zsh-completions zsh-syntax-highlighting)
-
 ## Autoload completions.
 autoload -U compinit && compinit
+
+# Some zsh plugins.
+plugins=(pip python git tmux colorize zsh-completions zsh-syntax-highlighting)
+
+## Export zsh initial script.
+source $ZSH/oh-my-zsh.sh
 
 ## Turns on interactive comments; comments begin with a #.
 setopt interactivecomments
