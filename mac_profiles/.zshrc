@@ -22,7 +22,7 @@ source $DOTFILES_DIR/system/.env
 autoload -U compinit && compinit
 
 # Some zsh plugins.
-plugins=(brew osx pip python git zsh-completions zsh-syntax-highlighting) # colorize ?
+plugins=(brew osx pip python git tmux colorize zsh-completions zsh-syntax-highlighting)
 
 ## Export zsh initial script.
 ## ALWAYS AFTER "PLUGINS" SECTION!!!

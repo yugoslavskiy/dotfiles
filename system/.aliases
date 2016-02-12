@@ -34,6 +34,9 @@ alias nmap="nmap --reason --open"
 ## ssh
 #alias ssh=color-ssh
 
+## colorized cat
+alias ccat="colorize"
+
 ## proxy
 alias uqproxy='proxychains4 -q'
 

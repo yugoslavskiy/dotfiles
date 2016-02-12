@@ -60,41 +60,55 @@ OCR_RUS() {
 	rm -f $OCR_VAR $OCR_VAR_3
 }
 
-## iTerm cosmetics
-## Change the color of the tab when using SSH
-## reset the color after the connection closes
+## iTerm2 tab color commands
+## http://code.google.com/p/iterm2/wiki/ProprietaryEscapeCodes
+if [[ -n "$ITERM_SESSION_ID" ]]; then
+    tab-color() {
+        echo -ne "\033]6;1;bg;red;brightness;$1\a"
+        echo -ne "\033]6;1;bg;green;brightness;$2\a"
+        echo -ne "\033]6;1;bg;blue;brightness;$3\a"
+    }
+    tab-red() { tab-color 255 0 0 }
+    tab-green() { tab-color 0 255 0 }
+    tab-blue() { tab-color 0 0 255 }
+    tab-reset() { echo -ne "\033]6;1;bg;*;default\a" }
 
-#tab-color() {
-#    echo -ne "\033]6;1;bg;red;brightness;$1\a"
-#    echo -ne "\033]6;1;bg;green;brightness;$2\a"
-#    echo -ne "\033]6;1;bg;blue;brightness;$3\a"
-#}
+    function iterm2_tab_precmd() {
+        tab-reset
+    }
 
-#tab-reset() {
-#    echo -ne "\033]6;1;bg;*;default\a"
-#}
+    function iterm2_tab_preexec() {
+        if [[ "$1" =~ "^ssh " ]]; then
+            if [[ "$1" =~ "prod" ]]; then
+                tab-color 255 160 160
+            else
+                tab-color 160 255 160
+            fi
+        else
+            tab-color 160 160 255
+        fi
+    }
 
-#color-ssh() {
-#    if [[ -n "$ITERM_SESSION_ID" ]]; then
-#        trap "tab-reset" INT EXIT
-#        if [[ "$*" =~ "production|ec2-.*compute-1" ]]; then
-#            tab-color 255 0 0
-#        else
-#            tab-color 0 255 0
-#        fi
-#    fi
-#    ssh $*
-#}
+    autoload -U add-zsh-hook
+    add-zsh-hook precmd  iterm2_tab_precmd
+    add-zsh-hook preexec iterm2_tab_preexec
+fi
 
-#compdef _ssh color-ssh=ssh
-
-
-
-
-
-
-
-
-
-
-
+## return my IP address
+function myip() {
+    ifconfig lo0 | grep 'inet '  | sed -e 's/:/ /' | awk '{print "lo0       : " $2}'
+    ifconfig en0 | grep 'inet '  | sed -e 's/:/ /' | awk '{print "en0 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
+    ifconfig en0 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en0 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
+    ifconfig en1 | grep 'inet '  | sed -e 's/:/ /' | awk '{print "en1 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
+    ifconfig en1 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en1 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
+}
+ 
+## Change directory to the current Finder directory
+cdf() {
+    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+    if [ "$target" != "" ]; then
+        cd "$target"; pwd
+    else
+        echo 'No Finder window found' >&2
+    fi
+}
