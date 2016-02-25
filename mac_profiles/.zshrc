@@ -43,3 +43,6 @@ setopt globdots
 ## Prevents you from accidentally overwriting an existing file.
 ## If you really do want to clobber a file, you can use the >! operator. 
 setopt noclobber
+
+## for msf
+export MSF_DATABASE_CONFIG=/usr/local/share/metasploit-framework/config/database.yml
