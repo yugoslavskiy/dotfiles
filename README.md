@@ -1,25 +1,5 @@
-# dotfiles
+# Install
 
-just my dotfiles
-
-## Mac OS
-
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/yugoslavskiy/dotfiles/master/install.sh)"
 ```
-ln -sfhv "/Users/yugoslavskiy/Dropbox/projects/dotfiles/mac_profiles/.zshrc" ~
-```
-
-## Linux
-
-```
-ln -sfv "/media/psf/Dropbox/projects/dotfiles/linux_profiles/.zshrc" ~
-```
-
-## TO-DO:
-
-- install.sh
-
-## References to authors
-
-- [Mathias Bynens](https://github.com/mathiasbynens/)
-- [g0tmi1k](https://github.com/g0tmi1k)
-
