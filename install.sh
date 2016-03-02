@@ -141,17 +141,6 @@ main() {
   printf "${BLUE}Install amix vimrc...${NORMAL}\n"
   sh ~/.vim_runtime/install_awesome_vimrc.sh
 
-  printf "${BLUE}"
-  echo '                           __      __  _____ __         '
-  echo '   ____ ___  __  __   ____/ /___  / /_/ __(_) /__  _____'
-  echo '  / __ `__ \/ / / /  / __  / __ \/ __/ /_/ / / _ \/ ___/'
-  echo ' / / / / / / /_/ /  / /_/ / /_/ / /_/ __/ / /  __(__  ) '
-  echo '/_/ /_/ /_/\__, /   \__,_/\____/\__/_/ /_/_/\___/____/  '
-  echo '          /____/                                        ...is now installed!'
-  echo ''
-  echo ''
-  printf "${NORMAL}"
-
   # If this user's login shell is not already "zsh", attempt to switch.
   TEST_CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
   if [ "$TEST_CURRENT_SHELL" != "zsh" ]; then
@@ -165,6 +154,11 @@ main() {
       printf "${BLUE}Please manually change your default shell to zsh!${NORMAL}\n"
     fi
   fi
+
+  echo ''
+  printf "${GREEN}Done.${NORMAL}\n"
+  echo ''
+
   env zsh
 }
 
