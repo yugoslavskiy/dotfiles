@@ -16,17 +16,14 @@ export COMMON_DOTFILES_DIR=$HOME/.dotfiles/Common
 ## fpath for completions
 export FPATH=$ZSH/custom/plugins/zsh-completions/src:$FPATH
 
-## system-specific dotfiles
-for DOTFILE in $( find $OSX_DOTFILES_DIR )
-do
-  [ -f "$DOTFILE" ] && source "$DOTFILE"
+## system-specific & common dotfiles
+for DOTFILE in $( find $OSX_DOTFILES_DIR && find $COMMON_DOTFILES_DIR ) ; do
+  [ -r "$DOTFILE" ] && [ -f "$DOTFILE" ] && source "$DOTFILE";
 done
 
-## common dotfiles
-for DOTFILE in $( find $COMMON_DOTFILES_DIR )
-do
-  [ -f "$DOTFILE" ] && source "$DOTFILE"
-done
+unset DOTFILE;
+unset OSX_DOTFILES_DIR;
+unset COMMON_DOTFILES_DIR;
 
 ## autoload completions for plugins
 autoload -U compinit && compinit

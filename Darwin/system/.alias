@@ -25,7 +25,7 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # get OS X Software Updates, and update Homebrew, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew cleanup; brew prune; brew cask cleanup'
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew cleanup --force; brew prune; brew cask cleanup; rm -rf /Library/Caches/Homebrew/*'
 
 # empty the trash on all mounted volumes and the main HDD.
 # Also, clear Apple’s System Logs to improve shell startup speed.
@@ -35,3 +35,9 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo 
 ## ssh
 alias goproxyomsk='proxychains4 -q autossh omsk -D 9999'
 alias goomsk='proxychains4 -q ssh omsk'
+
+# Lock the screen (when going AFK)
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
