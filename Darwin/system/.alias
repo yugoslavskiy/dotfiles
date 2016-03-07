@@ -25,7 +25,7 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # get OS X Software Updates, and update Homebrew, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew cleanup --force; brew prune; brew cask cleanup; rm -rf /Library/Caches/Homebrew/*'
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; brew cleanup --force; brew prune; brew cask cleanup; msfupdate; rm -rf /Library/Caches/Homebrew/*; gem cleanup ; rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/*;'
 
 # empty the trash on all mounted volumes and the main HDD.
 # Also, clear Apple’s System Logs to improve shell startup speed.
