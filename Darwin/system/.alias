@@ -10,7 +10,7 @@ alias cleanupds="find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
 alias remove_all_installers="find / -not -path '$HOME/Downloads/*' -not -path '/Volumes/*' -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null"
 
 ## Full gem cleanup
-alias gem_full_clean="gem cleanup; rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/"
+alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/"
 
 ## Full brew cleanup
 alias brew_full_clean="brew cleanup --force; brew cask cleanup --force; brew prune; find /opt/homebrew-cask/Caskroom -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null; find /Library/Caches/Homebrew/ -type f -ls -delete 2>/dev/null"
@@ -23,7 +23,7 @@ alias wifi_on='networksetup -setairportpower airport on'
 alias tac='tail -r'
 
 ## List open ports
-alias ports="netstat -anlt | grep LISTEN"
+alias ports='netstat -anlt | grep LISTEN'
 
 ## Show/hide hidden files in Finder
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
@@ -37,7 +37,7 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 ## Get OS X Software Updates, and update Homebrew, gem, msf, and cleanup installers
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; msfupdate; brew_full_clean; gem_full_clean; sudo remove_all_installers'
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; msfupdate; brew_full_clean; gem_cache_clean; sudo remove_all_installers'
 
 ## Empty the trash on all mounted volumes and the main HDD.
 ## Also, clear Apple’s System Logs to improve shell startup speed.
