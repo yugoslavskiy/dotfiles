@@ -26,7 +26,7 @@ main() {
 
   CHECK_ZSH_INSTALLED=$(grep /zsh$ /etc/shells | wc -l)
   if [ ! $CHECK_ZSH_INSTALLED -ge 1 ]; then
-    printf "${YELLOW}Zsh is not installed!${NORMAL} Please install zsh first!\n"
+    printf "${YELLOW}[!] Zsh is not installed!${NORMAL} Please install zsh first!\n"
     exit
   fi
   unset CHECK_ZSH_INSTALLED
@@ -36,7 +36,7 @@ main() {
   fi
 
   if [ -d "$ZSH" ]; then
-    printf "${YELLOW}You already have Oh My Zsh installed.${NORMAL}\n"
+    printf "${YELLOW}[!] You already have Oh My Zsh installed.${NORMAL}\n"
     printf "You'll need to remove $ZSH if you want to re-install.\n"
     exit
   fi
@@ -48,13 +48,13 @@ main() {
   # precedence over umasks except for filesystems mounted with option "noacl".
   umask g-w,o-w
 
-  printf "${BLUE}Cloning Oh My Zsh...${NORMAL}\n"
+  printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}Oh My Zsh${NORMAL}...\n"
   hash git >/dev/null 2>&1 || {
-    echo "Error: git is not installed"
+    printf "${RED}[!] Error: git is not installed${NORMAL}"
     exit 1
   }
-  env git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git $ZSH || {
-    printf "Error: git clone of oh-my-zsh repo failed\n"
+  env git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git $ZSH &>/dev/null || {
+    printf "${RED}[!] Error: git clone of oh-my-zsh repo failed${NORMAL}\n"
     exit 1
   }
 
@@ -72,73 +72,81 @@ main() {
   echo ''
   printf "${NORMAL}"
 
-  printf "${BLUE}Cloning zsh completions plugin...${NORMAL}\n"
-  hash git >/dev/null 2>&1 || {
-    echo "Error: git is not installed"
-    exit 1
-  }
-  env git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/custom/plugins/zsh-completions || {
-    printf "Error: git clone of zsh completions plugin repo failed\n"
+  printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}zsh completions${NORMAL} plugin...\n"
+
+  env git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/custom/plugins/zsh-completions &>/dev/null || {
+    printf "${RED}[!] Error: git clone of zsh completions plugin repo failed${NORMAL}\n"
     exit 1
   }
 
-  printf "${BLUE}Cloning zsh syntax highlighting plugin...${NORMAL}\n"
-  hash git >/dev/null 2>&1 || {
-    echo "Error: git is not installed"
-    exit 1
-  }
-  env git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting || {
-    printf "Error: git clone of zsh syntax highlighting repo failed\n"
-    exit 1
-  }
+  printf "${GREEN}[+]${NORMAL} Installing ${GREEN}zsh syntax highlighting${NORMAL} plugin...\n"
 
-  printf "${BLUE}Cloning my dotfiles...${NORMAL}\n"
-  hash git >/dev/null 2>&1 || {
-    echo "Error: git is not installed"
-    exit 1
-  }
-  env git clone https://github.com/yugoslavskiy/dotfiles.git ~/.dotfiles || {
-    printf "Error: git clone of my dotfiles repo failed\n"
-    exit 1
-  }
-
-  printf "${BLUE}Looking for an existing zsh config...${NORMAL}\n"
-  if [ -f ~/.zshrc ] || [ -h ~/.zshrc ]; then
-    printf "${YELLOW}Found ~/.zshrc.${NORMAL} ${GREEN}Backing up to ~/.zshrc.pre-dotfiles-install${NORMAL}\n";
-    mv ~/.zshrc ~/.zshrc.pre-oh-my-zsh;
+  if [ `uname -s` = "Darwin" ]; then
+    hash brew >/dev/null 2>&1 || {
+      printf "${RED}[!] Error: Homebrew is not installed${NORMAL}"
+      exit 1
+    }
+    brew install zsh-syntax-highlighting || {
+      printf "${RED}[!] Error: brew install of zsh-syntax-highlighting failed${NORMAL}\n"
+      exit 1
+    }
+  else
+    env git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting &>/dev/null || {
+      printf "${RED}[!] Error: git clone of zsh syntax highlighting repo failed${NORMAL}\n"
+      exit 1
+    }
   fi
 
-  printf "${BLUE}Adding my profile to ~/.zshrc${NORMAL}\n"
+  printf "${BLUE} [*] Looking for an existing .dotfiles directory...${NORMAL}\n"
+  if [ -d ~/.dotfiles ] || [ -h ~/.dotfiles ]; then
+    printf "${YELLOW} [!] Found ~/.dotfiles.${NORMAL} ${GREEN}Backing up to ~/.dotfiles.old.pre-dotfiles-install${NORMAL}\n";
+    mv ~/.dotfiles ~/.dotfiles.old.pre-dotfiles-install;
+  fi
+  
+  printf "${GREEN} [+]${NORMAL} Cloning ${GREEN}dotfiles${NORMAL}...\n"
+  env git clone https://github.com/yugoslavskiy/dotfiles.git ~/.dotfiles || {
+    printf "${RED} [!] Error: git clone of dotfiles repo failed${NORMAL}\n"
+    exit 1
+  }
+
+  printf "${BLUE}[*] Looking for an existing zsh config...${NORMAL}\n"
+  if [ -f ~/.zshrc ] || [ -h ~/.zshrc ]; then
+    printf "${YELLOW}[!] Found ~/.zshrc.${NORMAL} ${GREEN}Backing up to ~/.zshrc.old.pre-dotfiles-install${NORMAL}\n";
+    mv ~/.zshrc ~/.zshrc.old.pre-dotfiles-install;
+  fi
+
+  printf "${GREEN}[+]${NORMAL} Adding ${GREEN}zsh profile${NORMAL} to ~/.zshrc\n"
   [ `uname -s` = "Darwin" ] && cp ~/.dotfiles/Darwin/profile/.zshrc ~/.zshrc
   [ `uname -s` = "Linux"  ] && cp ~/.dotfiles/Linux/profile/.zshrc ~/.zshrc 
 
-  printf "${BLUE}Looking for an existing git config...${NORMAL}\n"
+  printf "${BLUE}[*] Looking for an existing git config...${NORMAL}\n"
   if [ -f ~/.gitconfig ] || [ -h ~/.gitconfig ]; then
-    printf "${YELLOW}Found ~/.gitconfig.${NORMAL} ${GREEN}Backing up to ~/.gitconfig.pre-dotfiles-install${NORMAL}\n";
-    mv ~/.gitconfig ~/.gitconfig.pre-dotfiles-install;
+    printf "${YELLOW}[!] Found ~/.gitconfig.${NORMAL} ${GREEN}Backing up to ~/.gitconfig.old.pre-dotfiles-install${NORMAL}\n";
+    mv ~/.gitconfig ~/.gitconfig.old.pre-dotfiles-install;
   fi
 
-  printf "${BLUE}Adding git config to ~/.gitconfig${NORMAL}\n"
+  printf "${GREEN}[+]${NORMAL} Adding ${GREEN}git config${NORMAL} to ~/.gitconfig\n"
   cp ~/.dotfiles/git/.gitconfig ~/.gitconfig
 
-
-  printf "${BLUE}Looking for an existing vim_runtime...${NORMAL}\n"
-  if [ -f ~/.vim_runtime ] || [ -h ~/.vim_runtime ]; then
-    printf "${YELLOW}Found ~/.vim_runtime.${NORMAL} ${GREEN}Backing up to ~/.vim_runtime.pre-dotfiles-install${NORMAL}\n";
-    mv ~/.vim_runtime ~/.vim_runtime.pre-dotfiles-install;
+  printf "${BLUE}[*] Looking for an existing vim_runtime...${NORMAL}\n"
+  if [ -d ~/.vim_runtime ]; then
+    printf "${YELLOW}[!] Found ~/.vim_runtime.${NORMAL} ${GREEN}Backing up to ~/.vim_runtime.old.pre-dotfiles-install${NORMAL}\n";
+    mv ~/.vim_runtime ~/.vim_runtime.old.pre-dotfiles-install;
   fi
 
-  printf "${BLUE}Cloning amix vimrc...${NORMAL}\n"
-  hash git >/dev/null 2>&1 || {
-    echo "Error: git is not installed"
-    exit 1
-  }
-  env git clone https://github.com/amix/vimrc.git ~/.vim_runtime || {
-    printf "Error: git clone of amix vimrc repo failed\n"
+  printf "${BLUE}[*] Looking for an existing .vimrc...${NORMAL}\n"
+  if [ -f ~/.vimrc ] || [ -h ~/.vimrc ]; then
+    printf "${YELLOW}[!] Found ~/.vimrc.${NORMAL} ${GREEN}Backing up to ~/.vimrc.old.pre-dotfiles-install${NORMAL}\n";
+    mv ~/.vimrc ~/.vimrc.old.pre-dotfiles-install;
+  fi
+
+  printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}amix vimrc${NORMAL}...\n"
+  env git clone https://github.com/amix/vimrc.git ~/.vim_runtime &>/dev/null || {
+    printf "${RED}[!] Error: git clone of amix vimrc repo failed${NORMAL}\n"
     exit 1
   }
 
-  printf "${BLUE}Install amix vimrc...${NORMAL}\n"
+  printf "${GREEN}[+]${NORMAL} Install ${GREEN}amix vimrc${NORMAL}...\n"
   sh ~/.vim_runtime/install_awesome_vimrc.sh
 
   # If this user's login shell is not already "zsh", attempt to switch.
@@ -146,7 +154,7 @@ main() {
   if [ "$TEST_CURRENT_SHELL" != "zsh" ]; then
     # If this platform provides a "chsh" command (not Cygwin), do it, man!
     if hash chsh >/dev/null 2>&1; then
-      printf "${BLUE}Time to change your default shell to zsh!${NORMAL}\n"
+      printf "${BLUE}[!] Time to change your default shell to zsh!${NORMAL}\n"
       chsh -s $(grep /zsh$ /etc/shells | tail -1)
     # Else, suggest the user do so manually.
     else
@@ -156,7 +164,7 @@ main() {
   fi
 
   echo ''
-  printf "${GREEN}Done.${NORMAL}\n"
+  printf "${GREEN}[+] Done.${NORMAL}"
   echo ''
 
   env zsh

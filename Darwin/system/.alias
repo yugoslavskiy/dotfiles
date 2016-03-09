@@ -3,6 +3,9 @@
 ## Enable aliases to be sudo’ed
 alias sudo='sudo '
 
+## Clear Chromium cache and history
+alias chromium_cache_clean='find ~/Library/Application\ Support/Chromium/Default/ -type f -not -path "*/Extensions/*" -not -path "*/Extension Rules/*" -not -path "*/Extension State/*" -ls -delete; find ~/Library/Caches/Chromium/ -type f -ls -delete'
+
 ## Recursively remove .DS_Store files
 alias cleanupds="find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
 
@@ -14,6 +17,11 @@ alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/c
 
 ## Full brew cleanup
 alias brew_full_clean="brew cleanup --force; brew cask cleanup --force; brew prune; find /opt/homebrew-cask/Caskroom -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null; find /Library/Caches/Homebrew/ -type f -ls -delete 2>/dev/null"
+
+## Empty the trash on all mounted volumes and the main HDD.
+## Also, clear Apple’s System Logs to improve shell startup speed.
+## Finally, clear download history from quarantine. https://mths.be/bum
+alias emptytrash="sudo find /Volumes/*/.Trashes -ls -delete; sudo find ~/.Trash -ls -delete; sudo find /private/var/log/asl/ -name "*.asl" -ls -delete; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
 ## Fast wi-fi switch
 alias wifi_off='networksetup -setairportpower airport off'
@@ -38,11 +46,6 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 
 ## Get OS X Software Updates, and update Homebrew, gem, msf, and cleanup installers
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; msfupdate; brew_full_clean; gem_cache_clean; sudo remove_all_installers'
-
-## Empty the trash on all mounted volumes and the main HDD.
-## Also, clear Apple’s System Logs to improve shell startup speed.
-## Finally, clear download history from quarantine. https://mths.be/bum
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
 ## ssh
 alias goproxyomsk='proxychains4 -q autossh omsk -D 9999'

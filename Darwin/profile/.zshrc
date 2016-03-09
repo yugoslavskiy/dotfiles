@@ -29,7 +29,7 @@ unset COMMON_DOTFILES_DIR;
 autoload -U compinit && compinit
 
 # zsh plugins
-plugins=(brew osx pip python git tmux colorize zsh-completions zsh-syntax-highlighting)
+plugins=(brew osx pip python git tmux colorize zsh-completions)
 
 ## export zsh initial script
 source $ZSH/oh-my-zsh.sh
@@ -42,3 +42,6 @@ setopt ignoreeof
 
 ## lets files beginning with a . be matched without explicitly specifying the dot.
 setopt globdots
+
+## zsh-syntax-highlighting plugin
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
