@@ -10,7 +10,7 @@ alias chromium_cache_clean='find ~/Library/Application\ Support/Chromium/Default
 alias cleanupds="find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
 
 ## Recursively remove all installers, exclude downloads and external drives
-alias remove_all_installers="find / -not -path '$HOME/Downloads/*' -not -path '/Volumes/*' -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null"
+alias remove_all_installers="sudo find / -not -path '$HOME/Downloads/*' -not -path '/Volumes/*' -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null"
 
 ## Full gem cleanup
 alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/"
