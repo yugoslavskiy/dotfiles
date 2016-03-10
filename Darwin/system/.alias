@@ -21,7 +21,7 @@ alias brew_full_clean="brew cleanup --force; brew cask cleanup --force; brew pru
 ## Empty the trash on all mounted volumes and the main HDD.
 ## Also, clear Apple’s System Logs to improve shell startup speed.
 ## Finally, clear download history from quarantine. https://mths.be/bum
-alias emptytrash='sudo find /Volumes/*/.Trashes -ls -delete; sudo find ~/.Trash -ls -delete; sudo find /private/var/log/asl/ -name '*.asl' -ls -delete; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent"'
+alias emptytrash='sudo find /Volumes/*/.Trashes -ls -delete; sudo find ~/.Trash -ls -delete; sudo find /private/var/log/asl/ -name "*.asl" -ls -delete; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent"'
 
 ## Fast wi-fi switch
 alias wifi_off='networksetup -setairportpower airport off'
