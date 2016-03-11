@@ -97,15 +97,15 @@ main() {
     }
   fi
 
-  printf "${BLUE} [*] Looking for an existing .dotfiles directory...${NORMAL}\n"
+  printf "${BLUE}[*] Looking for an existing .dotfiles directory...${NORMAL}\n"
   if [ -d ~/.dotfiles ] || [ -h ~/.dotfiles ]; then
-    printf "${YELLOW} [!] Found ~/.dotfiles.${NORMAL} ${GREEN}Backing up to ~/.dotfiles.old.pre-dotfiles-install${NORMAL}\n";
+    printf "${YELLOW}[!] Found ~/.dotfiles.${NORMAL} ${GREEN}Backing up to ~/.dotfiles.old.pre-dotfiles-install${NORMAL}\n";
     mv ~/.dotfiles ~/.dotfiles.old.pre-dotfiles-install;
   fi
   
-  printf "${GREEN} [+]${NORMAL} Cloning ${GREEN}dotfiles${NORMAL}...\n"
+  printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}dotfiles${NORMAL}...\n"
   env git clone https://github.com/yugoslavskiy/dotfiles.git ~/.dotfiles || {
-    printf "${RED} [!] Error: git clone of dotfiles repo failed${NORMAL}\n"
+    printf "${RED}[!] Error: git clone of dotfiles repo failed${NORMAL}\n"
     exit 1
   }
 
@@ -167,7 +167,7 @@ main() {
   printf "${GREEN}[+] Done.${NORMAL}"
   echo ''
 
-  env zsh
+  exit 0
 }
 
 main
