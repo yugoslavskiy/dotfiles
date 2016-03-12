@@ -1,13 +1,13 @@
 # Mac OS only
 
 ## cat with SublimeText
-scat () {
+function scat () {
 	subl -w -s $1 &
 }
 
-# `sdir` with no arguments opens the current directory in Sublime Text, otherwise
+# ``sdir'' with no arguments opens the current directory in Sublime Text, otherwise
 # opens the given location
-sdir() {
+function sdir() {
 	if [ $# -eq 0 ]; then
 		subl .;
 	else
@@ -16,19 +16,19 @@ sdir() {
 }
 
 ## SublimeText color folder diff
-smerdiff() {
+function smerdiff() {
 	path1=`realpath $1`
 	path2=`realpath $2`
 	subl --command "sublimerge_diff {\"left\": \"$path1/\", \"right\": \"$path2/\"}"
 }
 
 ## Open man page as PDF
-manpdf() {
+function manpdf() {
 	man -t "${1}" | open -f -a /Applications/Preview.app/ 
 }
 
 ## My functions for OCR MacOS screenshots
-OCR_ENG() {
+function OCR_ENG() {
 	OCR_VAR=$RANDOM
 	OCR_VAR_2=`echo $(($OCR_VAR+$RANDOM))`
 	OCR_VAR_3=`echo $OCR_VAR_2`.txt
@@ -44,7 +44,7 @@ OCR_ENG() {
 	rm -f $OCR_VAR $OCR_VAR_3
 }
 
-OCR_RUS() {
+function OCR_RUS() {
 	OCR_VAR=$RANDOM
 	OCR_VAR_2=`echo $(($OCR_VAR+$RANDOM))`
 	OCR_VAR_3=`echo $OCR_VAR_2`.txt
@@ -94,7 +94,7 @@ if [[ -n "$ITERM_SESSION_ID" ]]; then
     add-zsh-hook preexec iterm2_tab_preexec
 fi
 
-## return my IP address
+## Return my IP address
 function myip() {
     ifconfig lo0 | grep 'inet '  | sed -e 's/:/ /' | awk '{print "lo0       : " $2}'
     ifconfig en0 | grep 'inet '  | sed -e 's/:/ /' | awk '{print "en0 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
@@ -104,7 +104,7 @@ function myip() {
 }
  
 ## Change directory to the current Finder directory
-cdf() {
+function cdf() {
     target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
     if [ "$target" != "" ]; then
         cd "$target"; pwd
@@ -119,4 +119,66 @@ cdf() {
 # small enough for one screen.
 function tre() {
     tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}
+
+## Revert all Parallels VM's to last snapshots
+function revert_all_parallels_machines() {
+    for machine in $( prlctl list --all | while read line ; do echo ${line} | grep '{' | cut -d '{' -f 2 | cut -d '}' -f 1 ; done ); do
+        for last_snapshot in $( prlctl snapshot-list ${machine} | grep '*' | sed 's/^.*[*]{//g' | sed 's/}.*//g' ); do
+            prlctl snapshot-switch ${machine} -i ${last_snapshot} || {
+                
+                echo ''
+                echo 'Something wrong with reverting the VM:'
+                
+                prlctl list ${machine}
+                
+                echo ''
+                echo 'Check it out.'
+                echo ''
+            }
+            
+            # for debugging
+            #echo "Last snapshot for ${machine} is  ${last_snapshot}."
+        done
+    done
+
+    echo ''
+    echo 'revert_all_parallels_machines: Done.'
+    echo '' 
+}
+
+## Get OS X Software Updates, and update Homebrew, gem, msf, and cleanup installers
+function update() {
+    sudo softwareupdate -i -a;
+    brew update;
+    brew upgrade --all;
+    msfupdate;
+    vagrant plugin update vagrant-parallels;
+    brew_full_clean;
+    gem_cache_clean;
+    remove_all_installers;
+    
+    echo ''
+    echo 'update: Done.'
+    echo ''
+}
+
+## Prepare to backup (remove all junk)
+function prepare_to_backup() {
+    revert_all_parallels_machines;
+    chromium_cache_clean;
+    sublime_clean;
+    cleanupds;
+    clear_history;
+    clear_vim;
+    remove_all_installers;
+    gem_cache_clean;
+    brew_full_clean;
+    clear_temps;
+    clear_logs;
+    emptytrash;
+
+    echo ''
+    echo 'prepare_to_backup: Done.'
+    echo '' 
 }

@@ -1,0 +1,66 @@
+# OSX cleaning aliases 
+
+## Remove all *sh history files
+alias clear_history='rm -f ~/.*sh_history'
+
+## Remove vim files
+alias clear_vim='rm -f ~/.vim_mru_files; rm -f ~/.viminfo'
+
+## Remove all logs
+alias clear_logs='sudo find /private/var/log/ -ls -delete 2>/dev/null'
+
+## Recursively remove .DS_Store files
+alias cleanupds="sudo find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
+
+## Remove all temp files
+alias clear_temps='sudo find /tmp "$(/usr/bin/getconf DARWIN_USER_CACHE_DIR)" "$(echo $TMPDIR)" -ls -delete 2>/dev/null'
+
+## Full gem cleanup
+alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/"
+
+# OSX cleaning functions
+
+## Clean chromium cache and history
+function chromium_cache_clean() {
+	find ~/Library/Application\ Support/Chromium/Default/ -type f -not -path "*/Extensions/*" -not -path "*/Extension Rules/*" -not -path "*/Extension State/*" -ls -delete
+	sudo find ~/Library/Caches/Chromium/ -ls -delete
+
+	echo ''
+    echo 'chromium_cache_clean: Done.'
+    echo '' 
+}
+
+## Empty the trash on all mounted volumes and the main HDD.
+## Also, clear Apple’s System Logs to improve shell startup speed.
+## Finally, clear download history from quarantine. https://mths.be/bum
+function emptytrash() {
+    sudo find /Volumes/*/.Trashes ~/.Trash -ls -delete;
+    sudo find /private/var/log/asl/ -name "*.asl" -ls -delete;
+    sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent";
+
+    echo ''
+    echo 'emptytrash: Done.'
+    echo '' 
+}
+
+## Recursively remove all installers, exclude downloads and external drives (junk)
+function remove_all_installers() {
+    sudo find / -not -path '$HOME/Downloads/*' -not -path '/Volumes/*' -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null;
+
+    echo ''
+    echo 'remove_all_installers: Done.'
+    echo '' 
+}
+
+## Full brew cleanup (junk)
+function brew_full_clean() {
+    brew cleanup --force;
+    brew cask cleanup --force;
+    brew prune;
+    find /opt/homebrew-cask/Caskroom -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null;
+    find /Library/Caches/Homebrew/ -type f -ls -delete 2>/dev/null;
+    
+    echo ''
+    echo 'brew_full_clean: Done.'
+    echo ''  
+}
