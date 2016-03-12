@@ -16,14 +16,14 @@ alias cleanupds="sudo find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
 alias clear_temps='sudo find /tmp "$(/usr/bin/getconf DARWIN_USER_CACHE_DIR)" "$(echo $TMPDIR)" -ls -delete 2>/dev/null'
 
 ## Full gem cleanup
-alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/"
+alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/ 2>/dev/null"
 
 # OSX cleaning functions
 
 ## Clean chromium cache and history
 function chromium_cache_clean() {
-	find ~/Library/Application\ Support/Chromium/Default/ -type f -not -path "*/Extensions/*" -not -path "*/Extension Rules/*" -not -path "*/Extension State/*" -ls -delete
-	sudo find ~/Library/Caches/Chromium/ -ls -delete
+	find ~/Library/Application\ Support/Chromium/Default/ -type f -not -path "*/Extensions/*" -not -path "*/Extension Rules/*" -not -path "*/Extension State/*" -ls -delete 2>/dev/null;
+	sudo find ~/Library/Caches/Chromium/ -ls -delete 2>/dev/null;
 
 	echo ''
     echo 'chromium_cache_clean: Done.'
@@ -34,8 +34,8 @@ function chromium_cache_clean() {
 ## Also, clear Apple’s System Logs to improve shell startup speed.
 ## Finally, clear download history from quarantine. https://mths.be/bum
 function emptytrash() {
-    sudo find /Volumes/*/.Trashes ~/.Trash -ls -delete;
-    sudo find /private/var/log/asl/ -name "*.asl" -ls -delete;
+    sudo find /Volumes/*/.Trashes ~/.Trash -ls -delete 2>/dev/null;
+    sudo find /private/var/log/asl/ -name "*.asl" -ls -delete 2>/dev/null;
     sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent";
 
     echo ''
