@@ -7,7 +7,16 @@ alias sudo='sudo '
 alias chromium_cache_clean='find ~/Library/Application\ Support/Chromium/Default/ -type f -not -path "*/Extensions/*" -not -path "*/Extension Rules/*" -not -path "*/Extension State/*" -ls -delete; find ~/Library/Caches/Chromium/ -type f -ls -delete'
 
 ## Recursively remove .DS_Store files
-alias cleanupds="find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
+alias cleanupds="sudo find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
+
+## Remove all temp files
+alias clear_temps='sudo find /tmp "$(/usr/bin/getconf DARWIN_USER_CACHE_DIR)" "$(echo $TMPDIR)" -ls -delete'
+
+## Remove all *sh histories
+alias clear_history='rm -f ~/.*sh_history'
+
+## Remove vim junk
+alias clear_vim='rm -f ~/.vim_mru_files; rm -f ~/.viminfo'
 
 ## Recursively remove all installers, exclude downloads and external drives
 alias remove_all_installers="sudo find / -not -path '$HOME/Downloads/*' -not -path '/Volumes/*' -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null"
@@ -45,11 +54,14 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 ## Get OS X Software Updates, and update Homebrew, gem, msf, and cleanup installers
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; msfupdate; brew_full_clean; gem_cache_clean; sudo remove_all_installers'
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade --all; msfupdate; vagrant plugin update vagrant-parallels; brew_full_clean; gem_cache_clean; remove_all_installers'
 
 ## ssh
 alias goproxyomsk='proxychains4 -q autossh omsk -D 9999'
 alias goomsk='proxychains4 -q ssh omsk'
+
+## Prepare to backup
+alias prepare_to_backup='revert_all_parallels_machines; chromium_cache_clean; cleanupds; clear_history; clear_vim; remove_all_installers; gem_cache_clean; brew_full_clean; clear_temps; emptytrash'
 
 ## Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
