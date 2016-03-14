@@ -27,37 +27,13 @@ function manpdf() {
 	man -t "${1}" | open -f -a /Applications/Preview.app/ 
 }
 
-## My functions for OCR MacOS screenshots
-function OCR_ENG() {
-	OCR_VAR=$RANDOM
-	OCR_VAR_2=`echo $(($OCR_VAR+$RANDOM))`
-	OCR_VAR_3=`echo $OCR_VAR_2`.txt
-	convert -density 200 -units PixelsPerInch -type Grayscale +compress "$1" "$OCR_VAR"
-	tesseract $OCR_VAR $OCR_VAR_2 -l eng
-	cat $OCR_VAR_3 | pbcopy
-	echo ' '
-	echo '---------------------------------------------------------'
-	echo ' '
-	cat $OCR_VAR_3
-	echo ' '
-	echo '---------------------------------------------------------'
-	rm -f $OCR_VAR $OCR_VAR_3
-}
+## Functions for tesseract OCR MacOS screenshots
 
+function OCR_ENG() {
+	tesseract "$1" -l eng stdout | pbcopy
+}
 function OCR_RUS() {
-	OCR_VAR=$RANDOM
-	OCR_VAR_2=`echo $(($OCR_VAR+$RANDOM))`
-	OCR_VAR_3=`echo $OCR_VAR_2`.txt
-	convert -density 200 -units PixelsPerInch -type Grayscale +compress "$1" "$OCR_VAR"
-	tesseract $OCR_VAR $OCR_VAR_2 -l rus
-	cat $OCR_VAR_3 | pbcopy
-	echo ' '
-	echo '---------------------------------------------------------'
-	echo ' '
-	cat $OCR_VAR_3
-	echo ' '
-	echo '---------------------------------------------------------'
-	rm -f $OCR_VAR $OCR_VAR_3
+	tesseract "$1" -l rus stdout | pbcopy
 }
 
 ## iTerm2 tab color commands
