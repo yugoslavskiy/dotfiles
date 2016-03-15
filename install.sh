@@ -2,7 +2,7 @@ main() {
   # Use colors, but only if connected to a terminal, and that terminal
   # supports them.
   if which tput >/dev/null 2>&1; then
-      ncolors=$(tput colors)
+    ncolors=$(tput colors)
   fi
   if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
     RED="$(tput setaf 1)"
@@ -24,21 +24,36 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
-  CHECK_ZSH_INSTALLED=$(grep /zsh$ /etc/shells | wc -l)
-  if [ ! $CHECK_ZSH_INSTALLED -ge 1 ]; then
-    printf "${YELLOW}[!] Zsh is not installed!${NORMAL} Please install zsh first!\n"
-    exit
-  fi
-  unset CHECK_ZSH_INSTALLED
+  # Check common tools
+  declare -a SYSTEMS=( 'Darwin:brew' 'Linux:sudo apt-get' )
+  declare -a TOOLS=( 'zsh' 'git' 'wget' 'vim' )
+
+  for pair in "${SYSTEMS[@]}"; do
+    os=$( echo $pair | cut -d ':' -f 1 )
+    pm=$( echo $pair | cut -d ':' -f 2 )
+    for tool in "${TOOLS[@]}"; do
+      if [[ $( uname -s ) = "${os}" ]]; then
+        hash ${tool} >& /dev/null || {
+          printf "${RED}[!] ${tool} is not installed!${NORMAL}\n"
+          printf "${YELLOW}[*] Trying to install ${tool} via '${pm}'...\n"
+          bash -c "${pm} install ${tool}" >& /dev/null || { 
+            printf "${RED}[-] Error: ${tool} installation failed.${NORMAL} Quitting...\n"
+            exit 1
+          }
+          printf "${GREEN}[+] ${tool} ${NORMAL}was successfully installed.\n"
+        }
+      fi
+    done
+  done
 
   if [ ! -n "$ZSH" ]; then
     ZSH=~/.oh-my-zsh
   fi
 
+  printf "${BLUE}[*] Looking for an existing Oh My Zsh installation....${NORMAL}\n"
   if [ -d "$ZSH" ]; then
-    printf "${YELLOW}[!] You already have Oh My Zsh installed.${NORMAL}\n"
-    printf "You'll need to remove $ZSH if you want to re-install.\n"
-    exit
+    printf "${YELLOW}[!] Found $ZSH.${NORMAL} ${GREEN}Backing up to $ZSH.old.pre-dotfiles-install${NORMAL}\n";
+    mv $ZSH $ZSH.old.pre-dotfiles-install;
   fi
 
   # Prevent the cloned repository from having insecure permissions. Failing to do
@@ -49,12 +64,8 @@ main() {
   umask g-w,o-w
 
   printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}Oh My Zsh${NORMAL}...\n"
-  hash git >/dev/null 2>&1 || {
-    printf "${RED}[!] Error: git is not installed${NORMAL}"
-    exit 1
-  }
   env git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git $ZSH &>/dev/null || {
-    printf "${RED}[!] Error: git clone of oh-my-zsh repo failed${NORMAL}\n"
+    printf "${RED}[!] Error: git clone of oh-my-zsh repo failed.${NORMAL} Quitting...\n"
     exit 1
   }
 
@@ -73,39 +84,33 @@ main() {
   printf "${NORMAL}"
 
   printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}zsh completions${NORMAL} plugin...\n"
-
   env git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/custom/plugins/zsh-completions &>/dev/null || {
-    printf "${RED}[!] Error: git clone of zsh completions plugin repo failed${NORMAL}\n"
+    printf "${RED}[!] Error: git clone of zsh completions plugin repo failed.${NORMAL} Quitting...\n"
     exit 1
   }
 
   printf "${GREEN}[+]${NORMAL} Installing ${GREEN}zsh syntax highlighting${NORMAL} plugin...\n"
-
-  if [ `uname -s` = "Darwin" ]; then
-    hash brew >/dev/null 2>&1 || {
-      printf "${RED}[!] Error: Homebrew is not installed${NORMAL}"
-      exit 1
-    }
+  if [ $( uname -s ) = "Darwin" ]; then
     brew install zsh-syntax-highlighting || {
-      printf "${RED}[!] Error: brew install of zsh-syntax-highlighting failed${NORMAL}\n"
+      printf "${RED}[!] Error: brew install of zsh-syntax-highlighting failed.${NORMAL} Quitting...\n"
       exit 1
     }
   else
     env git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting &>/dev/null || {
-      printf "${RED}[!] Error: git clone of zsh syntax highlighting repo failed${NORMAL}\n"
+      printf "${RED}[!] Error: git clone of zsh syntax highlighting repo failed.${NORMAL} Quitting...\n"
       exit 1
     }
   fi
 
   printf "${BLUE}[*] Looking for an existing .dotfiles directory...${NORMAL}\n"
-  if [ -d ~/.dotfiles ] || [ -h ~/.dotfiles ]; then
+  if [ -d ~/.dotfiles ]; then
     printf "${YELLOW}[!] Found ~/.dotfiles.${NORMAL} ${GREEN}Backing up to ~/.dotfiles.old.pre-dotfiles-install${NORMAL}\n";
     mv ~/.dotfiles ~/.dotfiles.old.pre-dotfiles-install;
   fi
   
   printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}dotfiles${NORMAL}...\n"
-  env git clone https://github.com/yugoslavskiy/dotfiles.git ~/.dotfiles || {
-    printf "${RED}[!] Error: git clone of dotfiles repo failed${NORMAL}\n"
+  env git clone https://github.com/yugoslavskiy/dotfiles.git ~/.dotfiles >& /dev/null || {
+    printf "${RED}[!] Error: git clone of dotfiles repo failed.${NORMAL} Quitting...\n"
     exit 1
   }
 
@@ -116,8 +121,8 @@ main() {
   fi
 
   printf "${GREEN}[+]${NORMAL} Adding ${GREEN}zsh profile${NORMAL} to ~/.zshrc\n"
-  [ `uname -s` = "Darwin" ] && cp ~/.dotfiles/Darwin/profile/.zshrc ~/.zshrc
-  [ `uname -s` = "Linux"  ] && cp ~/.dotfiles/Linux/profile/.zshrc ~/.zshrc 
+  [ $( uname -s ) = "Darwin" ] && cp ~/.dotfiles/Darwin/profile/.zshrc ~/.zshrc
+  [ $( uname -s ) = "Linux"  ] && cp ~/.dotfiles/Linux/profile/.zshrc ~/.zshrc 
 
   printf "${BLUE}[*] Looking for an existing git config...${NORMAL}\n"
   if [ -f ~/.gitconfig ] || [ -h ~/.gitconfig ]; then
@@ -141,13 +146,13 @@ main() {
   fi
 
   printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}amix vimrc${NORMAL}...\n"
-  env git clone https://github.com/amix/vimrc.git ~/.vim_runtime &>/dev/null || {
-    printf "${RED}[!] Error: git clone of amix vimrc repo failed${NORMAL}\n"
+  env git clone https://github.com/amix/vimrc.git ~/.vim_runtime >& /dev/null || {
+    printf "${RED}[!] Error: git clone of amix vimrc repo failed.${NORMAL} Quitting...\n"
     exit 1
   }
 
-  printf "${GREEN}[+]${NORMAL} Install ${GREEN}amix vimrc${NORMAL}...\n"
-  sh ~/.vim_runtime/install_awesome_vimrc.sh
+  printf "${GREEN}[+]${NORMAL} Installing ${GREEN}amix vimrc${NORMAL}...\n"
+  sh ~/.vim_runtime/install_awesome_vimrc.sh >& /dev/null
 
   # If this user's login shell is not already "zsh", attempt to switch.
   TEST_CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
