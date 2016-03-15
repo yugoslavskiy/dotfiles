@@ -46,6 +46,13 @@ main() {
     done
   done
 
+  unset SYSTEMS;
+  unset TOOLS;
+  unset pair;
+  unset tool;
+  unset os;
+  unset pm;
+
   if [ ! -n "$ZSH" ]; then
     ZSH=~/.oh-my-zsh
   fi
