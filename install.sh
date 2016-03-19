@@ -46,18 +46,11 @@ main() {
     done
   done
 
-  unset SYSTEMS;
-  unset TOOLS;
-  unset pair;
-  unset tool;
-  unset os;
-  unset pm;
-
   if [ ! -n "$ZSH" ]; then
     ZSH=~/.oh-my-zsh
   fi
 
-  printf "${BLUE}[*] Looking for an existing Oh My Zsh installation....${NORMAL}\n"
+  printf "${BLUE}[*] Looking for an existing Oh My Zsh installation...${NORMAL}\n"
   if [ -d "$ZSH" ]; then
     printf "${YELLOW}[!] Found $ZSH.${NORMAL} ${GREEN}Backing up to $ZSH.old.pre-dotfiles-install${NORMAL}\n";
     mv $ZSH $ZSH.old.pre-dotfiles-install;
@@ -82,7 +75,7 @@ main() {
   echo ' / __ \/ __ \   / __ `__ \/ / / /  /_  / / ___/ __ \ '
   echo '/ /_/ / / / /  / / / / / / /_/ /    / /_(__  ) / / / '
   echo '\____/_/ /_/  /_/ /_/ /_/\__, /    /___/____/_/ /_/  '
-  echo '                        /____/                       ....is now installed!'
+  echo '                        /____/                       ...is now installed!'
   echo ''
   echo 'p.s. Follow us at https://twitter.com/ohmyzsh.'
   echo ''
@@ -175,9 +168,7 @@ main() {
     fi
   fi
 
-  echo ''
-  printf "${GREEN}[+] Done.${NORMAL}"
-  echo ''
+  printf "\n${GREEN}[+] Dotfiles successfully installed.${NORMAL}\n"
 
   exit 0
 }
