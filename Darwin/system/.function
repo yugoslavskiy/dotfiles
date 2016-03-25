@@ -130,6 +130,7 @@ function update() {
     brew upgrade --all;
     msfupdate;
     vagrant plugin update vagrant-parallels;
+    ~/Dropbox/projects/osx-postinstall/bin/git_install.sh --update;
     brew_full_clean;
     gem_cache_clean;
     remove_all_installers;
@@ -137,23 +138,4 @@ function update() {
     echo ''
     echo 'update: Done.'
     echo ''
-}
-
-## Prepare to backup (remove all junk)
-function prepare_to_backup() {
-    revert_all_parallels_machines;
-    for script in $(ls ~/src/osx-clear-browser-histories | grep "sh" | cut -d '.' -f 1); do $script; done
-    sublime_clean;
-    cleanupds;
-    clear_home;
-    remove_all_installers;
-    gem_cache_clean;
-    brew_full_clean;
-    clear_temps;
-    clear_logs;
-    emptytrash;
-
-    echo ''
-    echo 'prepare_to_backup: Done.'
-    echo '' 
 }
