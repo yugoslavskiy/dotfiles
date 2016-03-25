@@ -142,7 +142,7 @@ function update() {
 ## Prepare to backup (remove all junk)
 function prepare_to_backup() {
     revert_all_parallels_machines;
-    for script in $(ls ~/src/osx-clear-browser-histories | grep "sh"); do $script; done
+    for script in $(ls ~/src/osx-clear-browser-histories | grep "sh" | cut -d '.' -f 1); do $script; done
     sublime_clean;
     cleanupds;
     clear_home;
