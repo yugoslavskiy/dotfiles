@@ -1,10 +1,4 @@
-# OSX cleaning aliases 
-
-## Remove all *sh history files
-alias clear_history='rm -f ~/.*sh_history'
-
-## Remove vim files
-alias clear_vim='rm -f ~/.vim_mru_files; rm -f ~/.viminfo'
+# OSX cleaning aliases / functions
 
 ## Remove all logs
 alias clear_logs='sudo find /private/var/log/ -ls -delete 2>/dev/null'
@@ -16,19 +10,7 @@ alias cleanupds="sudo find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
 alias clear_temps='sudo find /tmp "$(/usr/bin/getconf DARWIN_USER_CACHE_DIR)" "$(echo $TMPDIR)" -ls -delete 2>/dev/null'
 
 ## Full gem cleanup
-alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/ 2>/dev/null"
-
-# OSX cleaning functions
-
-## Clean chromium cache and history
-function chromium_cache_clean() {
-	find ~/Library/Application\ Support/Chromium/Default/ -type f -not -path "*/Extensions/*" -not -path "*/Extension Rules/*" -not -path "*/Extension State/*" -ls -delete 2>/dev/null;
-	sudo find ~/Library/Caches/Chromium/ -ls -delete 2>/dev/null;
-
-	echo ''
-    echo 'chromium_cache_clean: Done.'
-    echo '' 
-}
+alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/ 2>/dev/null; gem cleanup; gem sources -c"
 
 ## Empty the trash on all mounted volumes and the main HDD.
 ## Also, clear Apple’s System Logs to improve shell startup speed.
@@ -43,7 +25,7 @@ function emptytrash() {
     echo '' 
 }
 
-## Recursively remove all installers, exclude downloads and external drives (junk)
+## Recursively remove all installers, exclude downloads and external drives
 function remove_all_installers() {
     sudo find / -not -path '$HOME/Downloads/*' -not -path '/Volumes/*' -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null;
 
@@ -63,4 +45,29 @@ function brew_full_clean() {
     echo ''
     echo 'brew_full_clean: Done.'
     echo ''  
+}
+
+function clear_home() {
+    rm -f ~/.*sh_history
+    rm -f ~/.vim_mru_files
+    rm -f ~/.viminfo
+    rm -f ~/.wget-hsts
+    rm -f ~/.zcompdump*
+    rm -f ~/.rnd
+    rm -f ~/.pythonhist
+    rm -f ~/.python_history
+    rm -f ~/.psql_history
+    rm -f ~/.msf4/history
+    rm -f ~/.lesshst
+    rm -rf ~/.tor
+    rm -rf ~/.vim_runtime/temp_dirs/*
+    rm -rf ~/.lldb
+    rm -rf ~/.john
+    rm -rf ~/.recon-ng
+    rm -rf ~/.msf4/logs/*
+    rm -rf ~/.oracle_jre_usage
+    rm -rf ~/.msf4/loot/*
+    rm -rf ~/.matplotlib
+    rm -rf ~/.local/share
+    rm -rf ~/.cache
 }
