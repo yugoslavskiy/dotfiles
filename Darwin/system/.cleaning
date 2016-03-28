@@ -6,9 +6,6 @@ alias clear_logs='sudo find /private/var/log/ -ls -delete 2>/dev/null'
 ## Recursively remove .DS_Store files
 alias cleanupds="sudo find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
 
-## Remove all temp files
-alias clear_temps='sudo find /tmp "$(/usr/bin/getconf DARWIN_USER_CACHE_DIR)" "$(echo $TMPDIR)" -ls -delete 2>/dev/null'
-
 ## Full gem cleanup
 alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/ 2>/dev/null; gem cleanup; gem sources -c"
 
@@ -50,29 +47,38 @@ function brew_full_clean() {
     echo ''  
 }
 
+## Remove all temp / cache files
+function clear_caches() {
+    rm -rfv /tmp/
+    rm -rfv $(/usr/bin/getconf DARWIN_USER_CACHE_DIR) 
+    rm -rfv $(echo $TMPDIR)
+    qlmanage -r cache
+}
+
+## Remove all temp / sensitive info
 function clear_home() {
-    rm -f ~/.*sh_history
-    rm -f ~/.vim_mru_files
-    rm -f ~/.viminfo
-    rm -f ~/.wget-hsts
-    rm -f ~/.zcompdump*
-    rm -f ~/.rnd
-    rm -f ~/.pythonhist
-    rm -f ~/.python_history
-    rm -f ~/.psql_history
-    rm -f ~/.msf4/history
-    rm -f ~/.lesshst
-    rm -rf ~/.tor
-    rm -rf ~/.vim_runtime/temp_dirs/*
-    rm -rf ~/.lldb
-    rm -rf ~/.john
-    rm -rf ~/.recon-ng
-    rm -rf ~/.msf4/logs/*
-    rm -rf ~/.oracle_jre_usage
-    rm -rf ~/.msf4/loot/*
-    rm -rf ~/.matplotlib
-    rm -rf ~/.local/share
-    rm -rf ~/.cache
+    rm -fv ~/.*sh_history
+    rm -fv ~/.vim_mru_files
+    rm -fv ~/.viminfo
+    rm -fv ~/.wget-hsts
+    rm -fv ~/.zcompdump*
+    rm -fv ~/.rnd
+    rm -fv ~/.pythonhist
+    rm -fv ~/.python_history
+    rm -fv ~/.psql_history
+    rm -fv ~/.msf4/history
+    rm -fv ~/.lesshst
+    rm -rfv ~/.tor
+    rm -rfv ~/.vim_runtime/temp_dirs/
+    rm -rfv ~/.lldb
+    rm -rfv ~/.john
+    rm -rfv ~/.recon-ng
+    rm -rfv ~/.msf4/logs/
+    rm -rfv ~/.oracle_jre_usage
+    rm -rfv ~/.msf4/loot/
+    rm -rfv ~/.matplotlib
+    rm -rfv ~/.local/share
+    rm -rfv ~/.cache
 }
 
 ## Prepare to backup (remove all junk)
@@ -85,7 +91,7 @@ function prepare_to_backup() {
     remove_all_installers;
     gem_cache_clean;
     brew_full_clean;
-    clear_temps;
+    clear_caches;
     clear_logs;
     emptytrash;
 
