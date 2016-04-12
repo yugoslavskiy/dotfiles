@@ -49,10 +49,10 @@ function brew_full_clean() {
 
 ## Remove all temp / cache files
 function clear_caches() {
-    rm -rfv /tmp/
-    rm -rfv $(/usr/bin/getconf DARWIN_USER_CACHE_DIR) 
-    rm -rfv $(echo $TMPDIR)
-    qlmanage -r cache
+    sudo rm -rfv /tmp/
+    sudo rm -rfv $(/usr/bin/getconf DARWIN_USER_CACHE_DIR) 
+    sudo rm -rfv $(echo $TMPDIR)
+    sudo qlmanage -r cache
 }
 
 ## Remove all temp / sensitive info
