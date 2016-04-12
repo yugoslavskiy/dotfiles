@@ -131,9 +131,6 @@ function update() {
     msfupdate;
     vagrant plugin update vagrant-parallels;
     ~/Dropbox/projects/osx-postinstall/bin/git_install.sh --git_tools_dir $HOME/Dropbox/projects/osx-postinstall/data/tools/git-tools --update;
-    brew_full_clean;
-    gem_cache_clean;
-    remove_all_installers;
     
     echo ''
     echo 'update: Done.'
