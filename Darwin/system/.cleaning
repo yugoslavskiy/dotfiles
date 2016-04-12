@@ -7,7 +7,7 @@ alias clear_logs='sudo find /private/var/log/ -ls -delete 2>/dev/null'
 alias cleanupds="sudo find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
 
 ## Full gem cleanup
-alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/ 2>/dev/null; gem cleanup; gem sources -c"
+alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/ 2>/dev/null; gem sources -c"
 
 ## Clear all browsers data
 alias clear_all_browsers='for script in $(ls ~/src/osx-clear-browser-histories | grep "sh" | cut -d "." -f 1); do $script; done'
@@ -16,7 +16,8 @@ alias clear_all_browsers='for script in $(ls ~/src/osx-clear-browser-histories |
 ## Also, clear Apple’s System Logs to improve shell startup speed.
 ## Finally, clear download history from quarantine. https://mths.be/bum
 function emptytrash() {
-    sudo find /Volumes/*/.Trashes ~/.Trash -ls -delete 2>/dev/null;
+    sudo find /Volumes/*/.Trashes/ -ls -delete 2>/dev/null;
+    sudo find ~/.Trash/ -ls -delete 2>/dev/null;
     sudo find /private/var/log/asl/ -name "*.asl" -ls -delete 2>/dev/null;
     sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent";
 
@@ -34,12 +35,11 @@ function remove_all_installers() {
     echo '' 
 }
 
-## Full brew cleanup (junk)
+## Full brew cleanup
 function brew_full_clean() {
     brew cleanup --force;
     brew cask cleanup --force;
     brew prune;
-    find /opt/homebrew-cask/Caskroom -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null;
     find /Library/Caches/Homebrew/ -type f -ls -delete 2>/dev/null;
     
     echo ''
@@ -49,10 +49,14 @@ function brew_full_clean() {
 
 ## Remove all temp / cache files
 function clear_caches() {
-    sudo rm -rfv /tmp/
-    sudo rm -rfv $(/usr/bin/getconf DARWIN_USER_CACHE_DIR) 
-    sudo rm -rfv $(echo $TMPDIR)
-    sudo qlmanage -r cache
+    sudo find /tmp/ -ls -delete 2>/dev/null;
+    sudo find $(/usr/bin/getconf DARWIN_USER_CACHE_DIR) -ls -delete 2>/dev/null;
+    sudo find $(echo $TMPDIR) -ls -delete 2>/dev/null;
+    sudo qlmanage -r cache;
+    
+    echo ''
+    echo 'clear_caches: Done.'
+    echo ''
 }
 
 ## Remove all temp / sensitive info
@@ -79,6 +83,11 @@ function clear_home() {
     rm -rfv ~/.matplotlib
     rm -rfv ~/.local/share
     rm -rfv ~/.cache
+
+    echo ''
+    echo 'clear_home: Done.'
+    echo ''
+    
 }
 
 ## Prepare to backup (remove all junk)
