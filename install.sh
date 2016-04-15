@@ -25,7 +25,7 @@ main() {
   set -e
 
   # Check common tools
-  declare -a SYSTEMS=( 'Darwin:brew' 'Linux:sudo apt-get' )
+  declare -a SYSTEMS=( 'Darwin:brew' 'Linux:sudo apt-get -y' )
   declare -a TOOLS=( 'zsh' 'git' 'wget' 'vim' )
 
   for pair in "${SYSTEMS[@]}"; do
