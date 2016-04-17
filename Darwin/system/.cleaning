@@ -73,7 +73,7 @@ function clear_home() {
     rm -fv ~/.msf4/history
     rm -fv ~/.lesshst
     rm -rfv ~/.tor
-    rm -rfv ~/.vim_runtime/temp_dirs/
+    find  ~/.vim_runtime/temp_dirs/ -ls -delete 2>/dev/null;
     rm -rfv ~/.lldb
     rm -rfv ~/.john
     rm -rfv ~/.recon-ng
