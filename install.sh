@@ -34,8 +34,8 @@ main() {
     for tool in "${TOOLS[@]}"; do
       if [[ $( uname -s ) = "${os}" ]]; then
         hash ${tool} >& /dev/null || {
-          printf "${RED}[!] ${tool} is not installed!${NORMAL}\n"
-          printf "${YELLOW}[*] Trying to install ${tool} via '${pm}'...\n"
+          printf "${RED}[!]${NORMAL} ${BOLD}${tool}${NORMAL} is not installed!\n"
+          printf "${YELLOW}[*]${NORMAL} Trying to install ${BOLD}${tool}${NORMAL} via '${pm}'...\n"
           bash -c "${pm} install ${tool}" >& /dev/null || { 
             printf "${RED}[-] Error: ${tool} installation failed.${NORMAL} Quitting...\n"
             exit 1
@@ -167,6 +167,15 @@ main() {
       printf "${BLUE}Please manually change your default shell to zsh!${NORMAL}\n"
     fi
   fi
+
+  printf "${BLUE}[*] Looking for an existing ~/.ssh/config...${NORMAL}\n"
+  if [ -f ~/.ssh/config ] || [ -h ~/.ssh/config ]; then
+    printf "${YELLOW}[!] Found ~/.ssh/config.${NORMAL} ${GREEN}Backing up to ~/.ssh/config.old.pre-dotfiles-install${NORMAL}\n";
+    mv ~/.vimrc ~/.ssh/config.old.pre-dotfiles-install;
+  fi
+
+  printf "${GREEN}[+]${NORMAL} Adding ${GREEN}ssh bug fixes${NORMAL} to ~/.ssh/config\n"
+  cp ~/.dotfiles/Common/security/ssh/config ~/.ssh/config
 
   printf "\n${GREEN}[+] Dotfiles successfully installed.${NORMAL}\n"
 

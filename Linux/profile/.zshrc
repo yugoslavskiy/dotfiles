@@ -11,7 +11,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 ## path to dotfiles directories
 export LINUX_DOTFILES_DIR=$HOME/.dotfiles/Linux/system
-export COMMON_DOTFILES_DIR=$HOME/.dotfiles/Common
+export COMMON_DOTFILES_DIR=$HOME/.dotfiles/Common/dotfiles
 
 ## fpath for completions
 export FPATH=$ZSH/custom/plugins/zsh-completions/src:$FPATH
