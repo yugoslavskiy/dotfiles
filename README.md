@@ -10,5 +10,5 @@ My dotfiles for OS X and Linux.
 ## Install
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/yugoslavskiy/dotfiles/master/install.sh)"
+wget -q -O - https://raw.githubusercontent.com/yugoslavskiy/dotfiles/master/Common/tools/install.sh | bash
 ```
