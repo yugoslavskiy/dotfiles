@@ -121,8 +121,7 @@ main() {
   fi
 
   printf "${GREEN}[+]${NORMAL} Adding ${GREEN}zsh profile${NORMAL} to ~/.zshrc\n"
-  [ $( uname -s ) = "Darwin" ] && cp ~/.dotfiles/Darwin/profile/.zshrc ~/.zshrc
-  [ $( uname -s ) = "Linux"  ] && cp ~/.dotfiles/Linux/profile/.zshrc ~/.zshrc 
+  cp ~/.dotfiles/"$(uname -s)"/profile/.zshrc ~/.zshrc
 
   printf "${BLUE}[*] Looking for an existing git config...${NORMAL}\n"
   if [ -f ~/.gitconfig ] || [ -h ~/.gitconfig ]; then
@@ -131,7 +130,7 @@ main() {
   fi
 
   printf "${GREEN}[+]${NORMAL} Adding ${GREEN}git config${NORMAL} to ~/.gitconfig\n"
-  cp ~/.dotfiles/git/.gitconfig ~/.gitconfig
+  cp ~/.dotfiles/Common/git/.gitconfig ~/.gitconfig
 
   printf "${BLUE}[*] Looking for an existing vim_runtime...${NORMAL}\n"
   if [ -d ~/.vim_runtime ]; then
@@ -167,15 +166,6 @@ main() {
       printf "${BLUE}Please manually change your default shell to zsh!${NORMAL}\n"
     fi
   fi
-
-  printf "${BLUE}[*] Looking for an existing ~/.ssh/config...${NORMAL}\n"
-  if [ -f ~/.ssh/config ] || [ -h ~/.ssh/config ]; then
-    printf "${YELLOW}[!] Found ~/.ssh/config.${NORMAL} ${GREEN}Backing up to ~/.ssh/config.old.pre-dotfiles-install${NORMAL}\n";
-    mv ~/.vimrc ~/.ssh/config.old.pre-dotfiles-install;
-  fi
-
-  printf "${GREEN}[+]${NORMAL} Adding ${GREEN}ssh bug fixes${NORMAL} to ~/.ssh/config\n"
-  cp ~/.dotfiles/Common/security/ssh/config ~/.ssh/config
 
   printf "\n${GREEN}[+] Dotfiles successfully installed.${NORMAL}\n"
 
