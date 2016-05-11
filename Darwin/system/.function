@@ -22,16 +22,11 @@ function smerdiff() {
 	subl --command "sublimerge_diff {\"left\": \"$path1/\", \"right\": \"$path2/\"}"
 }
 
-## Open man page as PDF
-function manpdf() {
-	man -t "${1}" | open -f -a /Applications/Preview.app/ 
-}
-
 ## Functions for tesseract OCR MacOS screenshots
-
 function OCR_ENG() {
 	tesseract "$1" -l eng stdout | pbcopy
 }
+
 function OCR_RUS() {
 	tesseract "$1" -l rus stdout | pbcopy
 }
@@ -78,15 +73,9 @@ function myip() {
     ifconfig en1 | grep 'inet '  | sed -e 's/:/ /' | awk '{print "en1 (IPv4): " $2 " " $3 " " $4 " " $5 " " $6}'
     ifconfig en1 | grep 'inet6 ' | sed -e 's/ / /' | awk '{print "en1 (IPv6): " $2 " " $3 " " $4 " " $5 " " $6}'
 }
- 
-## Change directory to the current Finder directory
-function cdf() {
-    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-    if [ "$target" != "" ]; then
-        cd "$target"; pwd
-    else
-        echo 'No Finder window found' >&2
-    fi
+
+function pidport() {
+    lsof -n -i4TCP:$1 | grep LISTEN
 }
 
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
@@ -123,6 +112,10 @@ function revert_all_parallels_machines() {
     echo '' 
 }
 
+function update_dotfiles () {
+    /bin/bash ~/.dotfiles/tools/upgrade.sh
+}
+
 ## Get OS X Software Updates, and update Homebrew, gem, msf, and cleanup installers
 function update() {
     sudo softwareupdate -i -a;
@@ -131,12 +124,14 @@ function update() {
     msfupdate;
     vagrant plugin update vagrant-parallels;
     ~/Dropbox/projects/osx-postinstall/bin/git_install.sh --git_tools_dir $HOME/Dropbox/projects/osx-postinstall/data/tools/git-tools --update;
-    
+    upgrade_oh_my_zsh
+    update_dotfiles
+
     echo ''
     echo 'update: Done.'
     echo ''
 }
 
-function pidport() {
-    lsof -n -i4TCP:$1 | grep LISTEN
-}
+
+
+
