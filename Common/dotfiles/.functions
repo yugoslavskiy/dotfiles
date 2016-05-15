@@ -66,3 +66,7 @@ function lit_e {
 function big_e {
   python -c "import struct; print ('here is', struct.pack('>I', $1))" | cut -d "'" -f 4
 }
+
+function update_dotfiles () {
+    /bin/bash ~/.dotfiles/Common/tools/update.sh
+}

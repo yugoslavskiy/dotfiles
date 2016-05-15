@@ -112,10 +112,6 @@ function revert_all_parallels_machines() {
     echo '' 
 }
 
-function update_dotfiles () {
-    /bin/bash ~/.dotfiles/tools/upgrade.sh
-}
-
 ## Get OS X Software Updates, and update Homebrew, gem, msf, and cleanup installers
 function update() {
     sudo softwareupdate -i -a;
