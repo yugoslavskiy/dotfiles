@@ -58,3 +58,11 @@ function _msfvenom-list-generate {
   msfvenom --list encoders > ~/.msf4/msfvenom/encoders
   msfvenom --help-formats 2> ~/.msf4/msfvenom/formats
 }
+
+function lit_e {
+  python -c "import struct; print ('here is', struct.pack('<I', $1))" | cut -d "'" -f 4
+}
+
+function big_e {
+  python -c "import struct; print ('here is', struct.pack('>I', $1))" | cut -d "'" -f 4
+}
