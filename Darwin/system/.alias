@@ -33,3 +33,11 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 
 ## Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
+
+## Start/stop indexing on all volumes.
+alias spotlight_off='sudo mdutil -a -i off'
+alias spotlight_on='sudo mdutil -a -i on'
+
+## Load/unload Spotlight Launch Daemons.
+alias spotlight_unload='sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist'
+alias spotlight_load='sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist'
