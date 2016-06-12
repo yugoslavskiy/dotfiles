@@ -60,11 +60,11 @@ function _msfvenom-list-generate {
 }
 
 function lit_e () {
-  python -c 'import sys; a = sys.argv[1];print "\\x" + a[8:10:] + "\\x" + a[6:8:] + "\\x" +  a[4:6:] + "\\x" + a[2:4:]' $1
+  python -c 'import sys;a = sys.argv[1]; print "\\x" + a[8:10:] + "\\x" + a[6:8:] + "\\x" + a[4:6:] + "\\x" + a[2:4:]' $1
 }
 
 function big_e {
-  python -c 'import sys; a = sys.argv[1];print "\\x" + a[2:4:] + "\\x" + a[4:6:] + "\\x" +  a[6:8:] + "\\x" + a[8:10:]' $1
+  python -c 'import sys;a = sys.argv[1]; print "\\x" + a[2:4:] + "\\x" + a[4:6:] + "\\x" + a[6:8:] + "\\x" + a[8:10:]' $1
 }
 
 function update_dotfiles () {
