@@ -59,12 +59,12 @@ function _msfvenom-list-generate {
   msfvenom --help-formats 2> ~/.msf4/msfvenom/formats
 }
 
-function lit_e {
-  python -c "import struct; print ('here is', struct.pack('<I', $1))" | cut -d "'" -f 4
+function lit_e () {
+    python -c 'import sys; a = sys.argv[1];print "\\x" + a[8:10:] + "\\x" + a[6:8:] + "\\x" +  a[4:6:] + "\\x" + a[2:4:]' $1
 }
 
 function big_e {
-  python -c "import struct; print ('here is', struct.pack('>I', $1))" | cut -d "'" -f 4
+  python -c 'import sys; a = sys.argv[1];print "\\x" + a[2:4:] + "\\x" + a[4:6:] + "\\x" +  a[6:8:] + "\\x" + a[8:10:]' $1
 }
 
 function update_dotfiles () {
