@@ -60,13 +60,13 @@ function _msfvenom-list-generate {
 }
 
 function lit_e () {
-  [[ $(echo $1 | wc -c | tr -d ' ') = 11  ]] && python -c 'import sys;a = sys.argv[1]; print "\\x" + a[8:10:] + "\\x" + a[6:8:] + "\\x" + a[4:6:] + "\\x" + a[2:4:]' $1
+  [[ $(echo $1 | wc -c | tr -d ' ') = 11 ]] && python -c 'import sys;a = sys.argv[1]; print "\\x" + a[8:10:] + "\\x" + a[6:8:] + "\\x" + a[4:6:] + "\\x" + a[2:4:]' $1
   [[ $(echo $1 | wc -c | tr -d ' ') = 10 ]] && python -c 'import sys;a = sys.argv[1]; print "\\x" + a[7:9:] + "\\x" + a[5:7:] + "\\x" + a[3:5:] + "\\x0" + a[2:3:]' $1
 }
 
 function big_e {
   [[ $(echo $1 | wc -c | tr -d ' ') = 11 ]] && python -c 'import sys;a = sys.argv[1]; print "\\x" + a[2:4:] + "\\x" + a[4:6:] + "\\x" + a[6:8:] + "\\x" + a[8:10:]' $1
-  [[ $(echo $1 | wc -c | tr -d ' ') = 10 ]] && python -c 'import sys;a = sys.argv[1]; print "\\x" + a[2:3:] + "\\x" + a[3:5:] + "\\x" + a[5:7:] + "\\x0" + a[7:9:]' $1
+  [[ $(echo $1 | wc -c | tr -d ' ') = 10 ]] && python -c 'import sys;a = sys.argv[1]; print "\\x0" + a[2:3:] + "\\x" + a[3:5:] + "\\x" + a[5:7:] + "\\x" + a[7:9:]' $1
 }
 
 function update_dotfiles () {
