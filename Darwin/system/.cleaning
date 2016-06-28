@@ -23,7 +23,7 @@ function emptytrash() {
 
     echo ''
     echo 'emptytrash: Done.'
-    echo '' 
+    echo ''
 }
 
 ## Recursively remove all installers, exclude downloads and external drives
@@ -32,7 +32,7 @@ function remove_all_installers() {
 
     echo ''
     echo 'remove_all_installers: Done.'
-    echo '' 
+    echo ''
 }
 
 ## Full brew cleanup
@@ -95,7 +95,7 @@ function prepare_to_backup() {
     revert_all_parallels_machines;
     sublime_clean;
     cleanupds;
-    clear_all_browsers
+    clear_all_browsers;
     clear_home;
     remove_all_installers;
     gem_cache_clean;
@@ -103,6 +103,7 @@ function prepare_to_backup() {
     clear_caches;
     clear_logs;
     emptytrash;
+    sudo -k
 
     echo ''
     echo 'prepare_to_backup: Done.'

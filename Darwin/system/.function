@@ -122,6 +122,7 @@ function update() {
     ~/Dropbox/projects/osx-postinstall/bin/git_install.sh --git_tools_dir $HOME/Dropbox/projects/osx-postinstall/data/tools/git-tools --update;
     upgrade_oh_my_zsh
     update_dotfiles
+    sudo -k
 
     echo ''
     echo 'update: Done.'
