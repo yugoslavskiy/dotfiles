@@ -41,3 +41,6 @@ alias spotlight_on='sudo mdutil -a -i on'
 ## Load/unload Spotlight Launch Daemons.
 alias spotlight_unload='sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist'
 alias spotlight_load='sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist'
+
+## Go to iCloud Drive
+alias icl='~/Library/Mobile\ Documents/com\~apple\~CloudDocs/'
