@@ -74,5 +74,5 @@ function update_dotfiles () {
 }
 
 function translash_to_windows () {
-  echo $1 | tr -d '/' '\'
+  echo '$1' | tr -d '/' '\'
 }
