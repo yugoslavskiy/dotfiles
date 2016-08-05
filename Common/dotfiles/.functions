@@ -72,3 +72,7 @@ function big_e {
 function update_dotfiles () {
     /bin/bash ~/.dotfiles/Common/tools/update.sh
 }
+
+function translash_to_windows () {
+  echo $1 | tr -d '/' '\'
+}
