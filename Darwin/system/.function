@@ -129,6 +129,7 @@ function update() {
     echo ''
 }
 
-
-
-
+## Like Linux locate
+function locate_md () {
+    mdfind "kMDItemDisplayName == $1"
+}
