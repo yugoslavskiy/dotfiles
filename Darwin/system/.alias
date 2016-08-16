@@ -44,3 +44,6 @@ alias spotlight_load='sudo launchctl load -w /System/Library/LaunchDaemons/com.a
 
 ## Go to iCloud Drive
 alias icl='~/Library/Mobile\ Documents/com\~apple\~CloudDocs/'
+
+## Recursive git pull
+alias recursive_git_pull="find . -name .git -type d -exec realpath {} \; | sed 's/....$//' | xargs -P10 -I{} git -C {} pull | grep -v 'Already up-to-date'"
