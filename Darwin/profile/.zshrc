@@ -17,7 +17,7 @@ export COMMON_DOTFILES_DIR=$HOME/.dotfiles/Common/dotfiles
 export FPATH=$ZSH/custom/plugins/zsh-completions/src:$FPATH
 
 ## system-specific & common dotfiles
-for DOTFILE in $( find $OSX_DOTFILES_DIR && find $COMMON_DOTFILES_DIR ) ; do
+for DOTFILE in $( find $OSX_DOTFILES_DIR $COMMON_DOTFILES_DIR -type f ) ; do
   [ -r "$DOTFILE" ] && [ -f "$DOTFILE" ] && source "$DOTFILE";
 done
 
