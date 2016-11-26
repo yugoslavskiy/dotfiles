@@ -4,7 +4,7 @@
 alias clear_logs='sudo find /private/var/log/ -ls -delete 2>/dev/null'
 
 ## Recursively remove .DS_Store files
-alias cleanupds="sudo find / -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
+alias cleanupds="sudo find / -not -path '/Volumes/' -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
 
 ## Full gem cleanup
 alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/ 2>/dev/null; gem sources -c"
