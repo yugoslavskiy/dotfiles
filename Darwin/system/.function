@@ -133,3 +133,18 @@ function update() {
 function locate_md () {
     mdfind "kMDItemDisplayName == $1"
 }
+
+
+## Open translators
+translate () {
+/usr/bin/osascript -e '
+    tell application "Safari"
+        tell window 1
+            make new tab with properties {URL:"https://translate.google.com"}
+            make new tab with properties {URL:"https://translate.yandex.ru"}
+            make new tab with properties {URL:"https://www.translate.ru"}
+            set current tab to (make new tab with properties {URL:"https://www.multitran.ru"})
+            activate
+        end tell
+    end tell'
+}
