@@ -1,0 +1,6 @@
+# Mac OS only defensive functions
+
+## check link via thug -- https://github.com/buffer/thug
+thug {
+    docker run --rm -it -v ~/DevOps/DockerProjects/thug/logs:/tmp/thug/logs buffer/thug bash -c "python /usr/local/bin/thug -F $1"
+}
