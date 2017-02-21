@@ -6,3 +6,8 @@ alias edbroot="cd ~/src/exploit-db-git/"
 
 ## Postgres metasploit db config
 export MSF_DATABASE_CONFIG=/usr/local/share/metasploit-framework/config/database.yml
+
+## wpscan docker container -- https://wpscan.org
+wpscan () {
+    docker run --rm wpscanteam/wpscan "$@"
+}
