@@ -115,18 +115,22 @@ function revert_all_parallels_machines() {
 ## Get OS X Software Updates, and update Homebrew, gem, msf, and cleanup installers
 function update() {
     sudo softwareupdate -i -a;
+    sudo -k
     brew update;
-    brew upgrade --all;
+    brew upgrade;
     msfupdate;
-    vagrant plugin update vagrant-parallels;
+    #vagrant plugin update vagrant-parallels;
     ~/Dropbox/projects/osx-postinstall/bin/git_install.sh --git_tools_dir $HOME/Dropbox/projects/osx-postinstall/data/tools/git-tools --update;
     upgrade_oh_my_zsh
     update_dotfiles
-    sudo -k
 
     echo ''
     echo 'update: Done.'
     echo ''
+    #
+    # todo: 
+    # 	- docker images update
+    #
 }
 
 ## Like Linux locate
