@@ -1,39 +1,10 @@
 # OSX cleaning aliases / functions
 
-## Remove all logs
-alias clear_logs='sudo find /private/var/log/ -ls -delete 2>/dev/null'
-
-## Recursively remove .DS_Store files
-alias cleanupds="sudo find / -not -path '/Volumes/' -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
-
 ## Full gem cleanup
 alias gem_cache_clean="rm -rf /usr/local/Cellar/ruby/2.3.0/lib/ruby/gems/2.3.0/cache/ 2>/dev/null; gem sources -c"
 
 ## Clear all browsers data
 alias clear_all_browsers='for script in $(ls ~/src/osx-clear-browser-histories | grep "sh" | cut -d "." -f 1); do $script; done'
-
-## Empty the trash on all mounted volumes and the main HDD.
-## Also, clear Apple’s System Logs to improve shell startup speed.
-## Finally, clear download history from quarantine. https://mths.be/bum
-function emptytrash() {
-    sudo find /Volumes/*/.Trashes/ -ls -delete 2>/dev/null;
-    sudo find ~/.Trash/ -ls -delete 2>/dev/null;
-    sudo find /private/var/log/asl/ -name "*.asl" -ls -delete 2>/dev/null;
-    sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent";
-
-    echo ''
-    echo 'emptytrash: Done.'
-    echo ''
-}
-
-## Recursively remove all installers, exclude downloads and external drives
-function remove_all_installers() {
-    sudo find / -not -path '$HOME/Downloads/*' -not -path '/Volumes/*' -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null;
-
-    echo ''
-    echo 'remove_all_installers: Done.'
-    echo ''
-}
 
 ## Full brew cleanup
 function brew_full_clean() {
@@ -42,25 +13,30 @@ function brew_full_clean() {
     brew prune;
     find /Library/Caches/Homebrew/ -type f -ls -delete 2>/dev/null;
     
-    echo ''
-    echo 'brew_full_clean: Done.'
-    echo ''  
+    echo '\nbrew_full_clean: Done.\n'
 }
 
 ## Remove all temp / cache files
-function clear_caches() {
-    sudo find /tmp/ -ls -delete 2>/dev/null;
-    sudo find $(/usr/bin/getconf DARWIN_USER_CACHE_DIR) -ls -delete 2>/dev/null;
-    sudo find $(echo $TMPDIR) -ls -delete 2>/dev/null;
-    sudo qlmanage -r cache;
-    
-    echo ''
-    echo 'clear_caches: Done.'
-    echo ''
+function clear_caches_installers_logs_trash() {
+  sudo bash -c "find /tmp/ -ls -delete 2>/dev/null; \
+   find $(/usr/bin/getconf DARWIN_USER_CACHE_DIR) -ls -delete 2>/dev/null; \
+   find $(echo $TMPDIR) -ls -delete 2>/dev/null; \
+   find /Volumes/*/.Trashes/ -ls -delete 2>/dev/null; \
+   find ~/.Trash/ -ls -delete 2>/dev/null; \
+   find /private/var/log/asl/ -name '*.asl' -ls -delete 2>/dev/null; \
+   find / -not -path $HOME/Downloads/* -not -path '/Volumes/*' -type f \( -name '*.dmg' -o -name '*.pkg' \) -ls -delete 2>/dev/null; \
+   find /private/var/log/ -ls -delete 2>/dev/null; \
+   find / -not -path '/Volumes/' -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
+  
+  qlmanage -r cache; \
+  sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent";
+
+  echo '\nclear_caches: Done.\n'
 }
 
 ## Remove all temp / sensitive info
 function clear_home() {
+    find  ~/.vim_runtime/temp_dirs/ -ls -delete 2>/dev/null;
     rm -fv ~/.*sh_history
     rm -fv ~/.vim_mru_files
     rm -fv ~/.viminfo
@@ -73,7 +49,6 @@ function clear_home() {
     rm -fv ~/.msf4/history
     rm -fv ~/.lesshst
     rm -rfv ~/.tor
-    find  ~/.vim_runtime/temp_dirs/ -ls -delete 2>/dev/null;
     rm -rfv ~/.lldb
     rm -rfv ~/.john
     rm -rfv ~/.recon-ng
@@ -84,9 +59,7 @@ function clear_home() {
     rm -rfv ~/.local/share
     rm -rfv ~/.cache
 
-    echo ''
-    echo 'clear_home: Done.'
-    echo ''
+    echo '\nclear_home: Done.\n'
     
 }
 
@@ -94,18 +67,12 @@ function clear_home() {
 function prepare_to_backup() {
     revert_all_parallels_machines;
     sublime_clean;
-    cleanupds;
     clear_all_browsers;
     clear_home;
-    remove_all_installers;
     gem_cache_clean;
     brew_full_clean;
-    clear_caches;
-    clear_logs;
-    emptytrash;
+    clear_caches_installers_logs_trash;
     sudo -k
 
-    echo ''
-    echo 'prepare_to_backup: Done.'
-    echo ''
+    echo '\nprepare_to_backup: Done.\n'
 }
