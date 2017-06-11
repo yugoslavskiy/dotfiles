@@ -16,6 +16,9 @@ function brew_full_clean() {
     echo '\nbrew_full_clean: Done.\n'
 }
 
+## Quick DStore clean
+alias qdscleanup="find . -type f -name '*.DS_Store' -ls -delete 2>/dev/null"
+
 ## Remove all temp / cache files
 function clear_caches_installers_logs_trash() {
   sudo bash -c "find /tmp/ -ls -delete 2>/dev/null; \
