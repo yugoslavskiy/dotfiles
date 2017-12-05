@@ -12,8 +12,19 @@ function brew_full_clean() {
     brew cask cleanup --force;
     brew prune;
     find /Library/Caches/Homebrew/ -type f -ls -delete 2>/dev/null;
+    find ~/Library/Caches/Homebrew/ -type f -ls -delete 2> /dev/null;
     
     echo '\nbrew_full_clean: Done.\n'
+}
+
+## Clean telegram caches
+function telegram_cache_clean() {
+  find ~/Library/Containers/ru.keepcoder.Telegram/Data/Library/Caches/ru.keepcoder.Telegram/cache/ -type f -ls -delete 2> /dev/null;
+}
+
+## Clean Mail.app logs
+function mail_logs_clean() {
+  find ~/Library/Containers/com.apple.mail/Data/Library/Logs/Mail/ -type f -ls -delete 2> /dev/null;
 }
 
 ## Quick DStore clean
@@ -33,6 +44,8 @@ function clear_caches_installers_logs_trash() {
   
   qlmanage -r cache; \
   sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "delete from LSQuarantineEvent";
+  telegram_cache_clean;
+  mail_logs_clean;
 
   echo '\nclear_caches: Done.\n'
 }
@@ -99,6 +112,7 @@ killall Safari
 
 ## Prepare to backup (remove all junk)
 function prepare_to_backup() {
+    telegram_cache_clean;
     revert_all_parallels_machines;
     sublime_clean;
     delete_safari_cookies;
@@ -107,6 +121,7 @@ function prepare_to_backup() {
     gem_cache_clean;
     brew_full_clean;
     clear_caches_installers_logs_trash;
+    mail_logs_clean;
     sudo -k
 
     echo '\nprepare_to_backup: Done.\n'
