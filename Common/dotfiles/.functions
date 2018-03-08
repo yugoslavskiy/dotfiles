@@ -76,3 +76,17 @@ function update_dotfiles () {
 function translash_to_windows () {
   echo '$1' | tr -d '/' '\'
 }
+
+function get_imphash () {
+  python -c 'import sys,pefile;a = sys.argv[1];print(pefile.PE(a).get_imphash())' $1
+}
+
+function get_ssdeep ()
+{
+  python -c 'import sys,ssdeep;a = sys.argv[1];print(ssdeep.hash_from_file(a))' $1
+}
+
+function compare_ssdeep ()
+{
+  python -c 'import sys,ssdeep;a = sys.argv[1];b = sys.argv[2];print(ssdeep.compare(ssdeep.hash_from_file(a), ssdeep.hash_from_file(b)))' $1 $2
+}
