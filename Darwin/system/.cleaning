@@ -115,7 +115,6 @@ function prepare_to_backup() {
     telegram_cache_clean;
     revert_all_parallels_machines;
     sublime_clean;
-    clear_home;
     gem_cache_clean;
     brew_full_clean;
     clear_caches_installers_logs_trash;
