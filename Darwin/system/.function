@@ -24,7 +24,7 @@ function smerdiff() {
 
 ## Functions for tesseract OCR MacOS screenshots
 function OCR_ENG() {
-	tesseract "$1" -l eng stdout | pbcopy
+	tesseract "$1" stdout | pbcopy
 }
 
 function OCR_RUS() {
