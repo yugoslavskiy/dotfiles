@@ -28,6 +28,10 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 alias goproxyomsk='proxychains4 -q autossh omsk -D 9999'
 alias goomsk='proxychains4 -q ssh omsk'
 
+## proxy
+alias proxy_on='networksetup -setsocksfirewallproxystate wi-fi on'
+alias proxy_off='networksetup -setsocksfirewallproxystate wi-fi off'
+
 ## Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
