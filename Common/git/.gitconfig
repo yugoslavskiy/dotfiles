@@ -1,14 +1,15 @@
 # This is Git's per-user configuration file.
 [user]
 # Please adapt and uncomment the following lines:
-	name = Yugoslavskiy Daniil
+	name = yugoslavskiy
 	email = yugoslavskiy@gmail.com
 [push]
 	default = matching
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 [github]
 	user = yugoslavskiy
 [core]

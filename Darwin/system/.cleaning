@@ -52,9 +52,7 @@ function clear_caches_installers_logs_trash() {
 
 ## Remove all temp / sensitive info
 function clear_home() {
-    find  ~/.vim_runtime/temp_dirs/ -ls -delete 2>/dev/null;
     rm -fv ~/.*sh_history
-    rm -fv ~/.vim_mru_files
     rm -fv ~/.viminfo
     rm -fv ~/.wget-hsts
     rm -fv ~/.zcompdump*

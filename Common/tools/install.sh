@@ -26,7 +26,7 @@ main() {
 
   # Check common tools
   declare -a SYSTEMS=( 'Darwin:brew' 'Linux:sudo apt-get -y' )
-  declare -a TOOLS=( 'zsh' 'git' 'wget' 'vim' )
+  declare -a TOOLS=( 'zsh' 'git' 'wget' )
 
   for pair in "${SYSTEMS[@]}"; do
     os=$( echo $pair | cut -d ':' -f 1 )
@@ -131,27 +131,6 @@ main() {
 
   printf "${GREEN}[+]${NORMAL} Adding ${GREEN}git config${NORMAL} to ~/.gitconfig\n"
   cp ~/.dotfiles/Common/git/.gitconfig ~/.gitconfig
-
-  printf "${BLUE}[*] Looking for an existing vim_runtime...${NORMAL}\n"
-  if [ -d ~/.vim_runtime ]; then
-    printf "${YELLOW}[!] Found ~/.vim_runtime.${NORMAL} ${GREEN}Backing up to ~/.vim_runtime.old.pre-dotfiles-install${NORMAL}\n";
-    mv ~/.vim_runtime ~/.vim_runtime.old.pre-dotfiles-install;
-  fi
-
-  printf "${BLUE}[*] Looking for an existing .vimrc...${NORMAL}\n"
-  if [ -f ~/.vimrc ] || [ -h ~/.vimrc ]; then
-    printf "${YELLOW}[!] Found ~/.vimrc.${NORMAL} ${GREEN}Backing up to ~/.vimrc.old.pre-dotfiles-install${NORMAL}\n";
-    mv ~/.vimrc ~/.vimrc.old.pre-dotfiles-install;
-  fi
-
-  printf "${GREEN}[+]${NORMAL} Cloning ${GREEN}amix vimrc${NORMAL}...\n"
-  env git clone https://github.com/amix/vimrc.git ~/.vim_runtime >& /dev/null || {
-    printf "${RED}[!] Error: git clone of amix vimrc repo failed.${NORMAL} Quitting...\n"
-    exit 1
-  }
-
-  printf "${GREEN}[+]${NORMAL} Installing ${GREEN}amix vimrc${NORMAL}...\n"
-  sh ~/.vim_runtime/install_awesome_vimrc.sh >& /dev/null
 
   # If this user's login shell is not already "zsh", attempt to switch.
   TEST_CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
